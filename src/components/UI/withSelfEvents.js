@@ -1,3 +1,5 @@
+import utils from "../../lib/utils";
+
 export default {
   methods: {
     $_emitSelfEvent(event, data = {}) {
@@ -8,7 +10,8 @@ export default {
      * so we treat them as 'self' events of these objects
      */
     $_bindSelfEvents(events, emitter) {
-      Object.keys(this.$listeners).forEach(eventName => {
+      const listeners = utils.extractListenersFromAttrs(this.$attrs);
+      Object.keys(listeners).forEach(eventName => {
         if (events.includes(eventName)) {
           emitter.on(eventName, this.$_emitSelfEvent);
         }

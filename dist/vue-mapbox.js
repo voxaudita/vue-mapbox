@@ -1,3 +1,4 @@
+import { h } from "vue";
 import promisify from "map-promisified";
 
 var withEventsMixin = {
@@ -264,6 +265,28 @@ var options = {
   }
 };
 
+var utils = {
+  /**
+   * In Vue 3's virtual DOM, event listeners are now just attributes, prefixed with on, and as such are part of the $attrs object,
+   * so $listeners has been removed.
+   *
+   * @param {object} attrs
+   * @returns
+   */
+  extractListenersFromAttrs: attrs => {
+    const onRE = /^on[^a-z]/;
+    const listeners = {};
+
+    for (const property in attrs) {
+      if (onRE.test(property)) {
+        listeners[property] = attrs[property];
+      }
+    }
+
+    return listeners;
+  }
+};
+
 const watchers = {
   maxBounds(next) {
     this.map.setMaxBounds(next);
@@ -307,7 +330,8 @@ const watchers = {
 
 function watcher(prop, callback, next, prev) {
   if (this.initial) return;
-  if (this.$listeners[`update:${prop}`]) {
+  const listeners = utils.extractListenersFromAttrs(this.$attrs);
+  if (listeners[`update:${prop}`]) {
     if (this.propsIsUpdating[prop]) {
       this._watcher.active = false;
       this.$nextTick(() => {
@@ -381,9 +405,10 @@ var withPrivateMethods = {
           }
         }
       ];
+      const listeners = utils.extractListenersFromAttrs(this.$attrs);
       syncedProps.forEach(({ events, prop, getter }) => {
         events.forEach(event => {
-          if (this.$listeners[`update:${prop}`]) {
+          if (listeners[`update:${prop}`]) {
             this.map.on(event, this.$_updateSyncedPropsFabric(prop, getter));
           }
         });
@@ -410,7 +435,8 @@ var withPrivateMethods = {
     },
 
     $_bindMapEvents(events) {
-      Object.keys(this.$listeners).forEach(eventName => {
+      const listeners = utils.extractListenersFromAttrs(this.$attrs);
+      Object.keys(listeners).forEach(eventName => {
         if (events.includes(eventName)) {
           this.map.on(eventName, this.$_emitMapEvent);
         }
@@ -552,7 +578,7 @@ var GlMap = {
     });
   },
 
-  render(h) {
+  render() {
     if (!this.$$_containerVNode) {
       this.$_containerVNode = h("div", {
         id: this.container,
@@ -576,7 +602,8 @@ var withSelfEventsMixin = {
      * so we treat them as 'self' events of these objects
      */
     $_bindSelfEvents(events, emitter) {
-      Object.keys(this.$listeners).forEach(eventName => {
+      const listeners = utils.extractListenersFromAttrs(this.$attrs);
+      Object.keys(listeners).forEach(eventName => {
         if (events.includes(eventName)) {
           emitter.on(eventName, this.$_emitSelfEvent);
         }
@@ -845,7 +872,9 @@ var Marker = {
     }
     this.marker = new this.mapbox.Marker(markerOptions);
 
-    if (this.$listeners["update:coordinates"]) {
+    const listeners = utils.extractListenersFromAttrs(this.$attrs);
+
+    if (listeners["update:coordinates"]) {
       this.marker.on("dragend", event => {
         let newCoordinates;
         if (this.coordinates instanceof Array) {
@@ -882,7 +911,8 @@ var Marker = {
     },
 
     $_bindMarkerDOMEvents() {
-      Object.keys(this.$listeners).forEach(key => {
+      const listeners = utils.extractListenersFromAttrs(this.$attrs);
+      Object.keys(listeners).forEach(key => {
         if (Object.values(markerDOMEvents).includes(key)) {
           this.marker._element.addEventListener(key, event => {
             this.$_emitSelfEvent(event);
@@ -901,7 +931,7 @@ var Marker = {
     }
   },
 
-  render(h) {
+  render() {
     return h(
       "div",
       {
@@ -1113,7 +1143,7 @@ var Popup = {
     }
   },
 
-  render(h) {
+  render() {
     return h(
       "div",
       {
@@ -1299,7 +1329,8 @@ var layerMixin = {
     },
 
     $_bindLayerEvents(events) {
-      Object.keys(this.$listeners).forEach(eventName => {
+      const listeners = utils.extractListenersFromAttrs(this.$attrs);
+      Object.keys(listeners).forEach(eventName => {
         if (events.includes(eventName)) {
           this.map.on(eventName, this.layerId, this.$_emitLayerMapEvent);
         }

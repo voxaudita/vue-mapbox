@@ -1,5 +1,7 @@
+import { h } from "vue";
 import withEvents from "../../lib/withEvents";
 import withSelfEvents from "./withSelfEvents";
+import utils from "../../lib/utils";
 
 const markerEvents = {
   drag: "drag",
@@ -78,7 +80,9 @@ export default {
     }
     this.marker = new this.mapbox.Marker(markerOptions);
 
-    if (this.$listeners["update:coordinates"]) {
+    const listeners = utils.extractListenersFromAttrs(this.$attrs);
+
+    if (listeners["update:coordinates"]) {
       this.marker.on("dragend", event => {
         let newCoordinates;
         if (this.coordinates instanceof Array) {
@@ -115,7 +119,8 @@ export default {
     },
 
     $_bindMarkerDOMEvents() {
-      Object.keys(this.$listeners).forEach(key => {
+      const listeners = utils.extractListenersFromAttrs(this.$attrs);
+      Object.keys(listeners).forEach(key => {
         if (Object.values(markerDOMEvents).includes(key)) {
           this.marker._element.addEventListener(key, event => {
             this.$_emitSelfEvent(event);
@@ -134,7 +139,7 @@ export default {
     }
   },
 
-  render(h) {
+  render() {
     return h(
       "div",
       {

@@ -1,3 +1,4 @@
+import { h } from "vue";
 import withEvents from "../../lib/withEvents";
 import withSelfEvents from "./withSelfEvents";
 
@@ -200,7 +201,7 @@ export default {
     }
   },
 
-  render(h) {
+  render() {
     return h(
       "div",
       {

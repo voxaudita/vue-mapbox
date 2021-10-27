@@ -1,3 +1,4 @@
+import { h } from "vue";
 import "../../styles/index.css";
 import withEvents from "../../lib/withEvents";
 import mapEvents from "./events";
@@ -105,7 +106,7 @@ export default {
     });
   },
 
-  render(h) {
+  render() {
     if (!this.$$_containerVNode) {
       this.$_containerVNode = h("div", {
         id: this.container,

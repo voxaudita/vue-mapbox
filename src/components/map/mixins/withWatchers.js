@@ -1,3 +1,5 @@
+import utils from "../../../lib/utils";
+
 const watchers = {
   maxBounds(next) {
     this.map.setMaxBounds(next);
@@ -41,7 +43,8 @@ const watchers = {
 
 function watcher(prop, callback, next, prev) {
   if (this.initial) return;
-  if (this.$listeners[`update:${prop}`]) {
+  const listeners = utils.extractListenersFromAttrs(this.$attrs);
+  if (listeners[`update:${prop}`]) {
     if (this.propsIsUpdating[prop]) {
       this._watcher.active = false;
       this.$nextTick(() => {

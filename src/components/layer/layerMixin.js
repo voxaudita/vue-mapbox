@@ -1,5 +1,6 @@
 // import withRegistration from "../../lib/withRegistration";
 import withEvents from "../../lib/withEvents";
+import utils from "../../lib/utils";
 
 const mapboxSourceProps = {
   sourceId: {
@@ -156,7 +157,8 @@ export default {
     },
 
     $_bindLayerEvents(events) {
-      Object.keys(this.$listeners).forEach(eventName => {
+      const listeners = utils.extractListenersFromAttrs(this.$attrs);
+      Object.keys(listeners).forEach(eventName => {
         if (events.includes(eventName)) {
           this.map.on(eventName, this.layerId, this.$_emitLayerMapEvent);
         }

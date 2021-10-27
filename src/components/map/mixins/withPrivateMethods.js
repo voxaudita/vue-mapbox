@@ -1,3 +1,5 @@
+import utils from "../../../lib/utils";
+
 export default {
   methods: {
     $_updateSyncedPropsFabric(prop, data) {
@@ -42,9 +44,10 @@ export default {
           }
         }
       ];
+      const listeners = utils.extractListenersFromAttrs(this.$attrs);
       syncedProps.forEach(({ events, prop, getter }) => {
         events.forEach(event => {
-          if (this.$listeners[`update:${prop}`]) {
+          if (listeners[`update:${prop}`]) {
             this.map.on(event, this.$_updateSyncedPropsFabric(prop, getter));
           }
         });
@@ -71,7 +74,8 @@ export default {
     },
 
     $_bindMapEvents(events) {
-      Object.keys(this.$listeners).forEach(eventName => {
+      const listeners = utils.extractListenersFromAttrs(this.$attrs);
+      Object.keys(listeners).forEach(eventName => {
         if (events.includes(eventName)) {
           this.map.on(eventName, this.$_emitMapEvent);
         }
