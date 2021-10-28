@@ -82,7 +82,7 @@ export default {
 
     const listeners = utils.extractListenersFromAttrs(this.$attrs);
 
-    if (listeners["update:coordinates"]) {
+    if (listeners["onUpdate:coordinates"]) {
       this.marker.on("dragend", event => {
         let newCoordinates;
         if (this.coordinates instanceof Array) {
@@ -120,9 +120,10 @@ export default {
 
     $_bindMarkerDOMEvents() {
       const listeners = utils.extractListenersFromAttrs(this.$attrs);
-      Object.keys(listeners).forEach(key => {
-        if (Object.values(markerDOMEvents).includes(key)) {
-          this.marker._element.addEventListener(key, event => {
+      Object.keys(listeners).forEach(listenerKey => {
+        const eventName = listenerKey.substring(2).toLowerCase();
+        if (Object.values(markerDOMEvents).includes(eventName)) {
+          this.marker._element.addEventListener(eventName, event => {
             this.$_emitSelfEvent(event);
           });
         }

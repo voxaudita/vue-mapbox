@@ -156,10 +156,12 @@ export default {
       return this.$_emitMapEvent(event, { layerId: this.layerId });
     },
 
-    $_bindLayerEvents(events) {
+    $_bindLayerEvents(eventsConfig) {
+      const eventNames = Object.keys(eventsConfig);
       const listeners = utils.extractListenersFromAttrs(this.$attrs);
-      Object.keys(listeners).forEach(eventName => {
-        if (events.includes(eventName)) {
+      Object.keys(listeners).forEach(listenerKey => {
+        const eventName = listenerKey.substring(2).toLowerCase();
+        if (eventNames.includes(eventName)) {
           this.map.on(eventName, this.layerId, this.$_emitLayerMapEvent);
         }
       });

@@ -31,47 +31,47 @@ var withEventsMixin = {
 /* eslint-disable key-spacing */
 
 var mapEvents = {
-  resize: { name: "resize" },
-  webglcontextlost: { name: "webglcontextlost" },
-  webglcontextrestored: { name: "webglcontextrestored" },
-  remove: { name: "remove" },
-  movestart: { name: "movestart" },
-  load: { name: "load" },
-  contextmenu: { name: "contextmenu" },
-  dblclick: { name: "dblclick" },
-  click: { name: "click" },
-  touchcancel: { name: "touchcancel" },
-  touchmove: { name: "touchmove" },
-  touchend: { name: "touchend" },
-  touchstart: { name: "touchstart" },
-  dataloading: { name: "dataloading" },
-  mousemove: { name: "mousemove" },
-  mouseup: { name: "mouseup" },
-  mousedown: { name: "mousedown" },
-  sourcedataloading: { name: "sourcedataloading" },
-  error: { name: "error" },
-  data: { name: "data" },
-  styledata: { name: "styledata" },
-  sourcedata: { name: "sourcedata" },
-  mouseout: { name: "mouseout" },
-  styledataloading: { name: "styledataloading" },
-  moveend: { name: "moveend" },
-  move: { name: "move" },
-  render: { name: "render" },
-  zoom: { name: "zoom" },
-  zoomstart: { name: "zoomstart" },
-  zoomend: { name: "zoomend" },
-  boxzoomstart: { name: "boxzoomstart" },
-  boxzoomcancel: { name: "boxzoomcancel" },
-  boxzoomend: { name: "boxzoomend" },
-  rotate: { name: "rotate" },
-  rotatestart: { name: "rotatestart" },
-  rotateend: { name: "rotateend" },
-  dragend: { name: "dragend" },
-  drag: { name: "drag" },
-  dragstart: { name: "dragstart" },
-  pitch: { name: "pitch" },
-  idle: { name: "idle" }
+  onResize: { name: "resize", listener: "onResize" },
+  onWebglcontextlost: { name: "webglcontextlost", listener: "onWebglcontextlost" },
+  onWebglcontextrestored: { name: "webglcontextrestored", listener: "onWebglcontextrestored" },
+  onRemove: { name: "remove", listener: "onRemove" },
+  onMovestart: { name: "movestart", listener: "onMovestart" },
+  onLoad: { name: "load", listener: "onLoad" },
+  onContextmenu: { name: "contextmenu", listener: "onContextmenu" },
+  onDblclick: { name: "dblclick", listener: "onDblclick" },
+  onClick: { name: "click", listener: "onClick" },
+  onTouchcancel: { name: "touchcancel", listener: "onTouchcancel" },
+  onTouchmove: { name: "touchmove", listener: "onTouchmove" },
+  onTouchend: { name: "touchend", listener: "onTouchend" },
+  onTouchstart: { name: "touchstart", listener: "onTouchstart" },
+  onDataloading: { name: "dataloading", listener: "onDataloading" },
+  onMousemove: { name: "mousemove", listener: "onMousemove" },
+  onMouseup: { name: "mouseup", listener: "onMouseup" },
+  onMousedown: { name: "mousedown", listener: "onMousedown" },
+  onSourcedataloading: { name: "sourcedataloading", listener: "onSourcedataloading" },
+  onError: { name: "error", listener: "onError" },
+  onData: { name: "data", listener: "onData" },
+  onStyledata: { name: "styledata", listener: "onStyledata" },
+  onSourcedata: { name: "sourcedata", listener: "onSourcedata" },
+  onMouseout: { name: "mouseout", listener: "onMouseout" },
+  onStyledataloading: { name: "styledataloading", listener: "onStyledataloading" },
+  onMoveend: { name: "moveend", listener: "onMoveend" },
+  onMove: { name: "move", listener: "onMove" },
+  onRender: { name: "render", listener: "onRender" },
+  onZoom: { name: "zoom", listener: "onZoom" },
+  onZoomstart: { name: "zoomstart", listener: "onZoomstart" },
+  onZoomend: { name: "zoomend", listener: "onZoomend" },
+  onBoxzoomstart: { name: "boxzoomstart", listener: "onBoxzoomstart" },
+  onBoxzoomcancel: { name: "boxzoomcancel", listener: "onBoxzoomcancel" },
+  onBoxzoomend: { name: "boxzoomend", listener: "onBoxzoomend" },
+  onRotate: { name: "rotate", listener: "onRotate" },
+  onRotatestart: { name: "rotatestart", listener: "onRotatestart" },
+  onRotateend: { name: "rotateend", listener: "onRotateend" },
+  onDragend: { name: "dragend", listener: "onDragend" },
+  onDrag: { name: "drag", listener: "onDrag" },
+  onDragstart: { name: "dragstart", listener: "onDragstart" },
+  onPitch: { name: "pitch", listener: "onPitch" },
+  onIdle: { name: "idle", listener: "onIdle" }
 };
 
 var options = {
@@ -331,7 +331,7 @@ const watchers = {
 function watcher(prop, callback, next, prev) {
   if (this.initial) return;
   const listeners = utils.extractListenersFromAttrs(this.$attrs);
-  if (listeners[`update:${prop}`]) {
+  if (listeners[`onUpdate:${prop}`]) {
     if (this.propsIsUpdating[prop]) {
       this._watcher.active = false;
       this.$nextTick(() => {
@@ -408,7 +408,7 @@ var withPrivateMethods = {
       const listeners = utils.extractListenersFromAttrs(this.$attrs);
       syncedProps.forEach(({ events, prop, getter }) => {
         events.forEach(event => {
-          if (listeners[`update:${prop}`]) {
+          if (listeners[`onUpdate:${prop}`]) {
             this.map.on(event, this.$_updateSyncedPropsFabric(prop, getter));
           }
         });
@@ -435,9 +435,11 @@ var withPrivateMethods = {
     },
 
     $_bindMapEvents(events) {
+      const eventNames = events.map(event => event.name);
       const listeners = utils.extractListenersFromAttrs(this.$attrs);
-      Object.keys(listeners).forEach(eventName => {
-        if (events.includes(eventName)) {
+      Object.keys(listeners).forEach(listenerKey => {
+        const eventName = listenerKey.substring(2).toLowerCase();
+        if (eventNames.includes(eventName)) {
           this.map.on(eventName, this.$_emitMapEvent);
         }
       });
@@ -562,8 +564,8 @@ var GlMap = {
           this.$_RTLTextPluginError
         );
       }
-      const eventNames = Object.keys(mapEvents);
-      this.$_bindMapEvents(eventNames);
+      const events = Object.values(mapEvents);
+      this.$_bindMapEvents(events);
       this.$_registerAsyncActions(map);
       this.$_bindPropsUpdateEvents();
       this.initial = false;
@@ -601,10 +603,11 @@ var withSelfEventsMixin = {
      * MapboxGL JS emits this events on popup or marker object,
      * so we treat them as 'self' events of these objects
      */
-    $_bindSelfEvents(events, emitter) {
+    $_bindSelfEvents(eventNames, emitter) {
       const listeners = utils.extractListenersFromAttrs(this.$attrs);
-      Object.keys(listeners).forEach(eventName => {
-        if (events.includes(eventName)) {
+      Object.keys(listeners).forEach(listenerKey => {
+        const eventName = listenerKey.substring(2).toLowerCase();
+        if (eventNames.includes(eventName)) {
           emitter.on(eventName, this.$_emitSelfEvent);
         }
       });
@@ -874,7 +877,7 @@ var Marker = {
 
     const listeners = utils.extractListenersFromAttrs(this.$attrs);
 
-    if (listeners["update:coordinates"]) {
+    if (listeners["onUpdate:coordinates"]) {
       this.marker.on("dragend", event => {
         let newCoordinates;
         if (this.coordinates instanceof Array) {
@@ -912,9 +915,10 @@ var Marker = {
 
     $_bindMarkerDOMEvents() {
       const listeners = utils.extractListenersFromAttrs(this.$attrs);
-      Object.keys(listeners).forEach(key => {
-        if (Object.values(markerDOMEvents).includes(key)) {
-          this.marker._element.addEventListener(key, event => {
+      Object.keys(listeners).forEach(listenerKey => {
+        const eventName = listenerKey.substring(2).toLowerCase();
+        if (Object.values(markerDOMEvents).includes(eventName)) {
+          this.marker._element.addEventListener(eventName, event => {
             this.$_emitSelfEvent(event);
           });
         }
@@ -1156,21 +1160,21 @@ var Popup = {
   }
 };
 
-var layerEvents = [
-  "mousedown",
-  "mouseup",
-  "click",
-  "dblclick",
-  "mousemove",
-  "mouseenter",
-  "mouseleave",
-  "mouseover",
-  "mouseout",
-  "contextmenu",
-  "touchstart",
-  "touchend",
-  "touchcancel"
-];
+var layerEventsConfig = {
+  "mousedown": "onMousedown",
+  "mouseup": "onMouseup",
+  "click": "onClick",
+  "dblclick": "onDblclick",
+  "mousemove": "onMousemove",
+  "mouseenter": "onMouseenter",
+  "mouseleave": "onMouseleave",
+  "mouseover": "onMouseover",
+  "mouseout": "onMouseout",
+  "contextmenu": "onContextmenu",
+  "touchstart": "onTouchstart",
+  "touchend": "onTouchend",
+  "touchcancel": "onTouchcancel"
+};
 
 // import withRegistration from "../../lib/withRegistration";
 
@@ -1328,10 +1332,12 @@ var layerMixin = {
       return this.$_emitMapEvent(event, { layerId: this.layerId });
     },
 
-    $_bindLayerEvents(events) {
+    $_bindLayerEvents(eventsConfig) {
+      const eventNames = Object.keys(eventsConfig);
       const listeners = utils.extractListenersFromAttrs(this.$attrs);
-      Object.keys(listeners).forEach(eventName => {
-        if (events.includes(eventName)) {
+      Object.keys(listeners).forEach(listenerKey => {
+        const eventName = listenerKey.substring(2).toLowerCase();
+        if (eventNames.includes(eventName)) {
           this.map.on(eventName, this.layerId, this.$_emitLayerMapEvent);
         }
       });
@@ -1489,7 +1495,7 @@ var GeojsonLayer = {
         }
       }
       this.$_addLayer();
-      this.$_bindLayerEvents(layerEvents);
+      this.$_bindLayerEvents(layerEventsConfig);
       this.map.off("dataloading", this.$_watchSourceLoading);
       this.initial = false;
     },
@@ -1595,7 +1601,7 @@ var ImageLayer = {
         }
       }
       this.$_addLayer();
-      this.$_bindLayerEvents(layerEvents);
+      this.$_bindLayerEvents(layerEventsConfig);
       this.initial = false;
     },
 
@@ -1673,7 +1679,7 @@ var CanvasLayer = {
         }
       }
       this.$_addLayer();
-      this.$_bindLayerEvents(layerEvents);
+      this.$_bindLayerEvents(layerEventsConfig);
       this.initial = false;
     },
 
@@ -1739,7 +1745,7 @@ var VideoLayer = {
         }
       }
       this.$_addLayer();
-      this.$_bindLayerEvents(layerEvents);
+      this.$_bindLayerEvents(layerEventsConfig);
       this.initial = false;
     },
 
@@ -1824,7 +1830,7 @@ var VectorLayer = {
         }
       }
       this.$_addLayer();
-      this.$_bindLayerEvents(layerEvents);
+      this.$_bindLayerEvents(layerEventsConfig);
       this.map.off("dataloading", this.$_watchSourceLoading);
       this.initial = false;
     },
@@ -1898,7 +1904,7 @@ var RasterLayer = {
         }
       }
       this.$_addLayer();
-      this.$_bindLayerEvents(layerEvents);
+      this.$_bindLayerEvents(layerEventsConfig);
       this.map.off("dataloading", this.$_watchSourceLoading);
       this.initial = false;
     },

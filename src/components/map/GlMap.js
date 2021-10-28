@@ -90,8 +90,8 @@ export default {
           this.$_RTLTextPluginError
         );
       }
-      const eventNames = Object.keys(mapEvents);
-      this.$_bindMapEvents(eventNames);
+      const events = Object.values(mapEvents);
+      this.$_bindMapEvents(events);
       this.$_registerAsyncActions(map);
       this.$_bindPropsUpdateEvents();
       this.initial = false;

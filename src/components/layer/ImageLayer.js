@@ -1,5 +1,5 @@
 import mixin from "./layerMixin";
-import layerEvents from "../../lib/layerEvents";
+import layerEventsConfig from "../../lib/layerEvents";
 
 export default {
   name: "ImageLayer",
@@ -56,7 +56,7 @@ export default {
         }
       }
       this.$_addLayer();
-      this.$_bindLayerEvents(layerEvents);
+      this.$_bindLayerEvents(layerEventsConfig);
       this.initial = false;
     },
 

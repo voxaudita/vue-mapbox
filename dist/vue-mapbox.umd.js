@@ -45,128 +45,169 @@
 
   /* eslint-disable key-spacing */
   var mapEvents = {
-    resize: {
-      name: "resize"
+    onResize: {
+      name: "resize",
+      listener: "onResize"
     },
-    webglcontextlost: {
-      name: "webglcontextlost"
+    onWebglcontextlost: {
+      name: "webglcontextlost",
+      listener: "onWebglcontextlost"
     },
-    webglcontextrestored: {
-      name: "webglcontextrestored"
+    onWebglcontextrestored: {
+      name: "webglcontextrestored",
+      listener: "onWebglcontextrestored"
     },
-    remove: {
-      name: "remove"
+    onRemove: {
+      name: "remove",
+      listener: "onRemove"
     },
-    movestart: {
-      name: "movestart"
+    onMovestart: {
+      name: "movestart",
+      listener: "onMovestart"
     },
-    load: {
-      name: "load"
+    onLoad: {
+      name: "load",
+      listener: "onLoad"
     },
-    contextmenu: {
-      name: "contextmenu"
+    onContextmenu: {
+      name: "contextmenu",
+      listener: "onContextmenu"
     },
-    dblclick: {
-      name: "dblclick"
+    onDblclick: {
+      name: "dblclick",
+      listener: "onDblclick"
     },
-    click: {
-      name: "click"
+    onClick: {
+      name: "click",
+      listener: "onClick"
     },
-    touchcancel: {
-      name: "touchcancel"
+    onTouchcancel: {
+      name: "touchcancel",
+      listener: "onTouchcancel"
     },
-    touchmove: {
-      name: "touchmove"
+    onTouchmove: {
+      name: "touchmove",
+      listener: "onTouchmove"
     },
-    touchend: {
-      name: "touchend"
+    onTouchend: {
+      name: "touchend",
+      listener: "onTouchend"
     },
-    touchstart: {
-      name: "touchstart"
+    onTouchstart: {
+      name: "touchstart",
+      listener: "onTouchstart"
     },
-    dataloading: {
-      name: "dataloading"
+    onDataloading: {
+      name: "dataloading",
+      listener: "onDataloading"
     },
-    mousemove: {
-      name: "mousemove"
+    onMousemove: {
+      name: "mousemove",
+      listener: "onMousemove"
     },
-    mouseup: {
-      name: "mouseup"
+    onMouseup: {
+      name: "mouseup",
+      listener: "onMouseup"
     },
-    mousedown: {
-      name: "mousedown"
+    onMousedown: {
+      name: "mousedown",
+      listener: "onMousedown"
     },
-    sourcedataloading: {
-      name: "sourcedataloading"
+    onSourcedataloading: {
+      name: "sourcedataloading",
+      listener: "onSourcedataloading"
     },
-    error: {
-      name: "error"
+    onError: {
+      name: "error",
+      listener: "onError"
     },
-    data: {
-      name: "data"
+    onData: {
+      name: "data",
+      listener: "onData"
     },
-    styledata: {
-      name: "styledata"
+    onStyledata: {
+      name: "styledata",
+      listener: "onStyledata"
     },
-    sourcedata: {
-      name: "sourcedata"
+    onSourcedata: {
+      name: "sourcedata",
+      listener: "onSourcedata"
     },
-    mouseout: {
-      name: "mouseout"
+    onMouseout: {
+      name: "mouseout",
+      listener: "onMouseout"
     },
-    styledataloading: {
-      name: "styledataloading"
+    onStyledataloading: {
+      name: "styledataloading",
+      listener: "onStyledataloading"
     },
-    moveend: {
-      name: "moveend"
+    onMoveend: {
+      name: "moveend",
+      listener: "onMoveend"
     },
-    move: {
-      name: "move"
+    onMove: {
+      name: "move",
+      listener: "onMove"
     },
-    render: {
-      name: "render"
+    onRender: {
+      name: "render",
+      listener: "onRender"
     },
-    zoom: {
-      name: "zoom"
+    onZoom: {
+      name: "zoom",
+      listener: "onZoom"
     },
-    zoomstart: {
-      name: "zoomstart"
+    onZoomstart: {
+      name: "zoomstart",
+      listener: "onZoomstart"
     },
-    zoomend: {
-      name: "zoomend"
+    onZoomend: {
+      name: "zoomend",
+      listener: "onZoomend"
     },
-    boxzoomstart: {
-      name: "boxzoomstart"
+    onBoxzoomstart: {
+      name: "boxzoomstart",
+      listener: "onBoxzoomstart"
     },
-    boxzoomcancel: {
-      name: "boxzoomcancel"
+    onBoxzoomcancel: {
+      name: "boxzoomcancel",
+      listener: "onBoxzoomcancel"
     },
-    boxzoomend: {
-      name: "boxzoomend"
+    onBoxzoomend: {
+      name: "boxzoomend",
+      listener: "onBoxzoomend"
     },
-    rotate: {
-      name: "rotate"
+    onRotate: {
+      name: "rotate",
+      listener: "onRotate"
     },
-    rotatestart: {
-      name: "rotatestart"
+    onRotatestart: {
+      name: "rotatestart",
+      listener: "onRotatestart"
     },
-    rotateend: {
-      name: "rotateend"
+    onRotateend: {
+      name: "rotateend",
+      listener: "onRotateend"
     },
-    dragend: {
-      name: "dragend"
+    onDragend: {
+      name: "dragend",
+      listener: "onDragend"
     },
-    drag: {
-      name: "drag"
+    onDrag: {
+      name: "drag",
+      listener: "onDrag"
     },
-    dragstart: {
-      name: "dragstart"
+    onDragstart: {
+      name: "dragstart",
+      listener: "onDragstart"
     },
-    pitch: {
-      name: "pitch"
+    onPitch: {
+      name: "pitch",
+      listener: "onPitch"
     },
-    idle: {
-      name: "idle"
+    onIdle: {
+      name: "idle",
+      listener: "onIdle"
     }
   };
 
@@ -431,7 +472,7 @@
     if (this.initial) return;
     var listeners = utils.extractListenersFromAttrs(this.$attrs);
 
-    if (listeners["update:".concat(prop)]) {
+    if (listeners["onUpdate:".concat(prop)]) {
       if (this.propsIsUpdating[prop]) {
         this._watcher.active = false;
         this.$nextTick(function () {
@@ -514,7 +555,7 @@
               prop = _ref.prop,
               getter = _ref.getter;
           events.forEach(function (event) {
-            if (listeners["update:".concat(prop)]) {
+            if (listeners["onUpdate:".concat(prop)]) {
               _this2.map.on(event, _this2.$_updateSyncedPropsFabric(prop, getter));
             }
           });
@@ -546,9 +587,14 @@
       $_bindMapEvents: function $_bindMapEvents(events) {
         var _this4 = this;
 
+        var eventNames = events.map(function (event) {
+          return event.name;
+        });
         var listeners = utils.extractListenersFromAttrs(this.$attrs);
-        Object.keys(listeners).forEach(function (eventName) {
-          if (events.includes(eventName)) {
+        Object.keys(listeners).forEach(function (listenerKey) {
+          var eventName = listenerKey.substring(2).toLowerCase();
+
+          if (eventNames.includes(eventName)) {
             _this4.map.on(eventName, _this4.$_emitMapEvent);
           }
         });
@@ -958,9 +1004,9 @@
           _this.mapbox.setRTLTextPlugin(_this.RTLTextPluginUrl, _this.$_RTLTextPluginError);
         }
 
-        var eventNames = Object.keys(mapEvents);
+        var events = Object.values(mapEvents);
 
-        _this.$_bindMapEvents(eventNames);
+        _this.$_bindMapEvents(events);
 
         _this.$_registerAsyncActions(map);
 
@@ -1012,12 +1058,14 @@
        * MapboxGL JS emits this events on popup or marker object,
        * so we treat them as 'self' events of these objects
        */
-      $_bindSelfEvents: function $_bindSelfEvents(events, emitter) {
+      $_bindSelfEvents: function $_bindSelfEvents(eventNames, emitter) {
         var _this = this;
 
         var listeners = utils.extractListenersFromAttrs(this.$attrs);
-        Object.keys(listeners).forEach(function (eventName) {
-          if (events.includes(eventName)) {
+        Object.keys(listeners).forEach(function (listenerKey) {
+          var eventName = listenerKey.substring(2).toLowerCase();
+
+          if (eventNames.includes(eventName)) {
             emitter.on(eventName, _this.$_emitSelfEvent);
           }
         });
@@ -1278,7 +1326,7 @@
       this.marker = new this.mapbox.Marker(markerOptions);
       var listeners = utils.extractListenersFromAttrs(this.$attrs);
 
-      if (listeners["update:coordinates"]) {
+      if (listeners["onUpdate:coordinates"]) {
         this.marker.on("dragend", function (event) {
           var newCoordinates;
 
@@ -1319,9 +1367,11 @@
         var _this2 = this;
 
         var listeners = utils.extractListenersFromAttrs(this.$attrs);
-        Object.keys(listeners).forEach(function (key) {
-          if (Object.values(markerDOMEvents).includes(key)) {
-            _this2.marker._element.addEventListener(key, function (event) {
+        Object.keys(listeners).forEach(function (listenerKey) {
+          var eventName = listenerKey.substring(2).toLowerCase();
+
+          if (Object.values(markerDOMEvents).includes(eventName)) {
+            _this2.marker._element.addEventListener(eventName, function (event) {
               _this2.$_emitSelfEvent(event);
             });
           }
@@ -1544,7 +1594,21 @@
     }
   };
 
-  var layerEvents = ["mousedown", "mouseup", "click", "dblclick", "mousemove", "mouseenter", "mouseleave", "mouseover", "mouseout", "contextmenu", "touchstart", "touchend", "touchcancel"];
+  var layerEventsConfig = {
+    "mousedown": "onMousedown",
+    "mouseup": "onMouseup",
+    "click": "onClick",
+    "dblclick": "onDblclick",
+    "mousemove": "onMousemove",
+    "mouseenter": "onMouseenter",
+    "mouseleave": "onMouseleave",
+    "mouseover": "onMouseover",
+    "mouseout": "onMouseout",
+    "contextmenu": "onContextmenu",
+    "touchstart": "onTouchstart",
+    "touchend": "onTouchend",
+    "touchcancel": "onTouchcancel"
+  };
 
   function ownKeys$7(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -1690,12 +1754,15 @@
           layerId: this.layerId
         });
       },
-      $_bindLayerEvents: function $_bindLayerEvents(events) {
+      $_bindLayerEvents: function $_bindLayerEvents(eventsConfig) {
         var _this = this;
 
+        var eventNames = Object.keys(eventsConfig);
         var listeners = utils.extractListenersFromAttrs(this.$attrs);
-        Object.keys(listeners).forEach(function (eventName) {
-          if (events.includes(eventName)) {
+        Object.keys(listeners).forEach(function (listenerKey) {
+          var eventName = listenerKey.substring(2).toLowerCase();
+
+          if (eventNames.includes(eventName)) {
             _this.map.on(eventName, _this.layerId, _this.$_emitLayerMapEvent);
           }
         });
@@ -1869,7 +1936,7 @@
         }
 
         this.$_addLayer();
-        this.$_bindLayerEvents(layerEvents);
+        this.$_bindLayerEvents(layerEventsConfig);
         this.map.off("dataloading", this.$_watchSourceLoading);
         this.initial = false;
       },
@@ -1984,7 +2051,7 @@
         }
 
         this.$_addLayer();
-        this.$_bindLayerEvents(layerEvents);
+        this.$_bindLayerEvents(layerEventsConfig);
         this.initial = false;
       },
       $_addLayer: function $_addLayer() {
@@ -2064,7 +2131,7 @@
         }
 
         this.$_addLayer();
-        this.$_bindLayerEvents(layerEvents);
+        this.$_bindLayerEvents(layerEventsConfig);
         this.initial = false;
       },
       $_addLayer: function $_addLayer() {
@@ -2135,7 +2202,7 @@
         }
 
         this.$_addLayer();
-        this.$_bindLayerEvents(layerEvents);
+        this.$_bindLayerEvents(layerEventsConfig);
         this.initial = false;
       },
       $_addLayer: function $_addLayer() {
@@ -2229,7 +2296,7 @@
         }
 
         this.$_addLayer();
-        this.$_bindLayerEvents(layerEvents);
+        this.$_bindLayerEvents(layerEventsConfig);
         this.map.off("dataloading", this.$_watchSourceLoading);
         this.initial = false;
       },
@@ -2307,7 +2374,7 @@
         }
 
         this.$_addLayer();
-        this.$_bindLayerEvents(layerEvents);
+        this.$_bindLayerEvents(layerEventsConfig);
         this.map.off("dataloading", this.$_watchSourceLoading);
         this.initial = false;
       },

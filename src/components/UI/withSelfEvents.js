@@ -9,10 +9,11 @@ export default {
      * MapboxGL JS emits this events on popup or marker object,
      * so we treat them as 'self' events of these objects
      */
-    $_bindSelfEvents(events, emitter) {
+    $_bindSelfEvents(eventNames, emitter) {
       const listeners = utils.extractListenersFromAttrs(this.$attrs);
-      Object.keys(listeners).forEach(eventName => {
-        if (events.includes(eventName)) {
+      Object.keys(listeners).forEach(listenerKey => {
+        const eventName = listenerKey.substring(2).toLowerCase();
+        if (eventNames.includes(eventName)) {
           emitter.on(eventName, this.$_emitSelfEvent);
         }
       });

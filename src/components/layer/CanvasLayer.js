@@ -1,4 +1,4 @@
-import layerEvents from "../../lib/layerEvents";
+import layerEventsConfig from "../../lib/layerEvents";
 import mixin from "./layerMixin";
 
 export default {
@@ -52,7 +52,7 @@ export default {
         }
       }
       this.$_addLayer();
-      this.$_bindLayerEvents(layerEvents);
+      this.$_bindLayerEvents(layerEventsConfig);
       this.initial = false;
     },
 

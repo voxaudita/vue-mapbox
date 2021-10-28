@@ -47,7 +47,7 @@ export default {
       const listeners = utils.extractListenersFromAttrs(this.$attrs);
       syncedProps.forEach(({ events, prop, getter }) => {
         events.forEach(event => {
-          if (listeners[`update:${prop}`]) {
+          if (listeners[`onUpdate:${prop}`]) {
             this.map.on(event, this.$_updateSyncedPropsFabric(prop, getter));
           }
         });
@@ -74,9 +74,11 @@ export default {
     },
 
     $_bindMapEvents(events) {
+      const eventNames = events.map(event => event.name);
       const listeners = utils.extractListenersFromAttrs(this.$attrs);
-      Object.keys(listeners).forEach(eventName => {
-        if (events.includes(eventName)) {
+      Object.keys(listeners).forEach(listenerKey => {
+        const eventName = listenerKey.substring(2).toLowerCase();
+        if (eventNames.includes(eventName)) {
           this.map.on(eventName, this.$_emitMapEvent);
         }
       });
