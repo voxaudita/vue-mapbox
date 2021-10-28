@@ -1,5 +1,5 @@
-import { h } from "vue";
-import promisify from "map-promisified";
+import { h } from 'vue';
+import promisify from 'map-promisified';
 
 var withEventsMixin = {
   methods: {
@@ -547,7 +547,7 @@ var GlMap = {
     this.$_containerVNode = null;
     this.mapboxPromise = this.mapboxGl
       ? Promise.resolve(this.mapboxGl)
-      : import("mapbox-gl");
+      : import('mapbox-gl');
   },
 
   mounted() {
@@ -1956,24 +1956,4 @@ const MglRasterLayer = RasterLayer;
 const MglMarker = Marker;
 const MglPopup = Popup;
 
-export {
-  $helpers,
-  MglAttributionControl,
-  MglCanvasLayer,
-  MglFullscreenControl,
-  MglGeojsonLayer,
-  MglGeolocateControl,
-  MglImageLayer,
-  MglMap,
-  MglMarker,
-  MglNavigationControl,
-  MglPopup,
-  MglRasterLayer,
-  MglScaleControl,
-  MglVectorLayer,
-  MglVideoLayer,
-  asControl,
-  asLayer,
-  withEvents,
-  withSelfEvents
-};
+export { $helpers, MglAttributionControl, MglCanvasLayer, MglFullscreenControl, MglGeojsonLayer, MglGeolocateControl, MglImageLayer, MglMap, MglMarker, MglNavigationControl, MglPopup, MglRasterLayer, MglScaleControl, MglVectorLayer, MglVideoLayer, asControl, asLayer, withEvents, withSelfEvents };
