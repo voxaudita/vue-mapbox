@@ -33,7 +33,7 @@
     ]
   },
   "dependencies": {
-    "map-promisified": "latest"
+    "map-promisified": "git://github.com/soal/map-promisified#b9bb95f"
   },
   "peerDependencies": {
     "mapbox-gl": "^1.12.0",
@@ -44,7 +44,6 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/runtime": "^7.11.2",
     "@rollup/plugin-babel": "^5.2.1",
-    "@rollup/plugin-commonjs": "^13.0.2",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "eslint": "^5.10.0",
     "husky": "^1.2.0",
