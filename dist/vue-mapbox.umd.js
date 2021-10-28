@@ -4,14 +4,14 @@
         exports,
         require("@babel/runtime/helpers/defineProperty"),
         require("vue"),
-        require("map-promisified")
+        require("@babel/runtime/helpers/typeof")
       )
     : typeof define === "function" && define.amd
     ? define([
         "exports",
         "@babel/runtime/helpers/defineProperty",
         "vue",
-        "map-promisified"
+        "@babel/runtime/helpers/typeof"
       ], factory)
     : ((global =
         typeof globalThis !== "undefined" ? globalThis : global || self),
@@ -19,9 +19,9 @@
         (global["vue-mapbox"] = {}),
         global._defineProperty,
         global.vue,
-        global.promisify
+        global._typeof
       ));
-})(this, function(exports, _defineProperty, vue, promisify) {
+})(this, function(exports, _defineProperty, vue, _typeof) {
   "use strict";
 
   function _interopDefaultLegacy(e) {
@@ -31,9 +31,9 @@
   var _defineProperty__default = /*#__PURE__*/ _interopDefaultLegacy(
     _defineProperty
   );
-  var promisify__default = /*#__PURE__*/ _interopDefaultLegacy(promisify);
+  var _typeof__default = /*#__PURE__*/ _interopDefaultLegacy(_typeof);
 
-  function ownKeys$c(object, enumerableOnly) {
+  function ownKeys(object, enumerableOnly) {
     var keys = Object.keys(object);
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
@@ -46,11 +46,11 @@
     return keys;
   }
 
-  function _objectSpread$c(target) {
+  function _objectSpread(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$c(Object(source), true).forEach(function(key) {
+        ownKeys(Object(source), true).forEach(function(key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -59,7 +59,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$c(Object(source)).forEach(function(key) {
+        ownKeys(Object(source)).forEach(function(key) {
           Object.defineProperty(
             target,
             key,
@@ -86,7 +86,7 @@
             : {};
         this.$emit(
           name,
-          _objectSpread$c(
+          _objectSpread(
             {
               map: this.map,
               component: this
@@ -108,7 +108,7 @@
             : {};
         this.$_emitEvent(
           event.type,
-          _objectSpread$c(
+          _objectSpread(
             {
               mapboxEvent: event
             },
@@ -543,7 +543,7 @@
     watch: makeWatchers()
   };
 
-  function ownKeys$b(object, enumerableOnly) {
+  function ownKeys$1(object, enumerableOnly) {
     var keys = Object.keys(object);
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
@@ -556,11 +556,11 @@
     return keys;
   }
 
-  function _objectSpread$b(target) {
+  function _objectSpread$1(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$b(Object(source), true).forEach(function(key) {
+        ownKeys$1(Object(source), true).forEach(function(key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -569,7 +569,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$b(Object(source)).forEach(function(key) {
+        ownKeys$1(Object(source)).forEach(function(key) {
           Object.defineProperty(
             target,
             key,
@@ -656,8 +656,8 @@
             if (_this3.accessToken)
               _this3.mapbox.accessToken = _this3.accessToken;
             var map = new _this3.mapbox.Map(
-              _objectSpread$b(
-                _objectSpread$b({}, _this3._props),
+              _objectSpread$1(
+                _objectSpread$1({}, _this3._props),
                 {},
                 {
                   container: _this3.$refs.container,
@@ -697,7 +697,506 @@
     }
   };
 
-  function ownKeys$a(object, enumerableOnly) {
+  function unwrapExports(x) {
+    return x &&
+      x.__esModule &&
+      Object.prototype.hasOwnProperty.call(x, "default")
+      ? x["default"]
+      : x;
+  }
+
+  function createCommonjsModule(fn, basedir, module) {
+    return (
+      (module = {
+        path: basedir,
+        exports: {},
+        require: function(path, base) {
+          return commonjsRequire(
+            path,
+            base === undefined || base === null ? module.path : base
+          );
+        }
+      }),
+      fn(module, module.exports),
+      module.exports
+    );
+  }
+
+  function commonjsRequire() {
+    throw new Error(
+      "Dynamic requires are not currently supported by @rollup/plugin-commonjs"
+    );
+  }
+
+  var mapPromisify = createCommonjsModule(function(module, exports) {
+    (function(e, n) {
+      module.exports = n();
+    })(window, function() {
+      return (function(e) {
+        var n = {};
+
+        function t(r) {
+          if (n[r]) return n[r].exports;
+          var o = (n[r] = {
+            i: r,
+            l: !1,
+            exports: {}
+          });
+          return e[r].call(o.exports, o, o.exports, t), (o.l = !0), o.exports;
+        }
+
+        return (
+          (t.m = e),
+          (t.c = n),
+          (t.d = function(e, n, r) {
+            t.o(e, n) ||
+              Object.defineProperty(e, n, {
+                enumerable: !0,
+                get: r
+              });
+          }),
+          (t.r = function(e) {
+            "undefined" !== typeof Symbol &&
+              Symbol.toStringTag &&
+              Object.defineProperty(e, Symbol.toStringTag, {
+                value: "Module"
+              }),
+              Object.defineProperty(e, "__esModule", {
+                value: !0
+              });
+          }),
+          (t.t = function(e, n) {
+            if ((1 & n && (e = t(e)), 8 & n)) return e;
+            if (
+              4 & n &&
+              "object" === _typeof__default["default"](e) &&
+              e &&
+              e.__esModule
+            )
+              return e;
+            var r = Object.create(null);
+            if (
+              (t.r(r),
+              Object.defineProperty(r, "default", {
+                enumerable: !0,
+                value: e
+              }),
+              2 & n && "string" != typeof e)
+            )
+              for (var o in e) {
+                t.d(
+                  r,
+                  o,
+                  function(n) {
+                    return e[n];
+                  }.bind(null, o)
+                );
+              }
+            return r;
+          }),
+          (t.n = function(e) {
+            var n =
+              e && e.__esModule
+                ? function() {
+                    return e["default"];
+                  }
+                : function() {
+                    return e;
+                  };
+            return t.d(n, "a", n), n;
+          }),
+          (t.o = function(e, n) {
+            return Object.prototype.hasOwnProperty.call(e, n);
+          }),
+          (t.p = ""),
+          t((t.s = 0))
+        );
+      })([
+        function(e, n, t) {
+          e.exports = t(1);
+        },
+        function(e, n, t) {
+          t.r(n),
+            t.d(n, "default", function() {
+              return y;
+            });
+
+          var r = [
+              {
+                name: "moveend",
+                check: function check(e, n) {
+                  return n.center && e.isMoving();
+                }
+              },
+              {
+                name: "zoomend",
+                check: function check(e, n) {
+                  return void 0 !== n.zoom && null !== n.zoom && e.isZooming();
+                }
+              },
+              {
+                name: "rotateend",
+                check: function check(e, n) {
+                  return (
+                    void 0 !== n.bearing && null !== n.bearing && e.isRotating()
+                  );
+                }
+              },
+              {
+                name: "pitchend",
+                check: function check(e, n) {
+                  return (
+                    void 0 !== n.pitch && null !== n.bearing && e.isMoving()
+                  );
+                }
+              }
+            ],
+            o = function o(e) {
+              return {
+                center: e.getCenter(),
+                zoom: e.getZoom(),
+                bearing: e.getBearing(),
+                pitch: e.getPitch()
+              };
+            },
+            i = {
+              events: r,
+              getter: o
+            },
+            c = {
+              events: [
+                {
+                  name: "moveend",
+                  check: function check(e) {
+                    return e.isMoving();
+                  }
+                }
+              ],
+              getter: function getter(e) {
+                return {
+                  center: e.getCenter()
+                };
+              }
+            },
+            u = {
+              events: [
+                {
+                  name: "zoomend",
+                  check: function check(e) {
+                    return e.isZooming();
+                  }
+                }
+              ],
+              getter: function getter(e) {
+                return {
+                  zoom: e.getZoom()
+                };
+              }
+            },
+            f = {
+              events: [
+                {
+                  name: "rotateend",
+                  check: function check(e) {
+                    return e.isRotating();
+                  }
+                }
+              ],
+              getter: function getter(e) {
+                return {
+                  bearing: e.getBearing()
+                };
+              }
+            },
+            a = {
+              setCenter: c,
+              panBy: c,
+              panTo: c,
+              setZoom: u,
+              zoomTo: u,
+              zoomIn: u,
+              zoomOut: u,
+              setBearing: f,
+              rotateTo: f,
+              resetNorth: f,
+              snapToNorth: f,
+              setPitch: {
+                events: [
+                  {
+                    name: "pitchend",
+                    check: function check(e) {
+                      return !0;
+                    }
+                  }
+                ],
+                getter: function getter(e) {
+                  return {
+                    pitch: e.getPitch()
+                  };
+                }
+              },
+              fitBounds: {
+                events: [
+                  {
+                    name: "zoomend",
+                    check: function check(e) {
+                      return e.isZooming();
+                    }
+                  },
+                  {
+                    name: "moveend",
+                    check: function check(e) {
+                      return e.isMoving();
+                    }
+                  },
+                  {
+                    name: "rotateend",
+                    check: function check(e) {
+                      return e.isRotating();
+                    }
+                  }
+                ],
+                getter: function getter(e) {
+                  return {
+                    zoom: e.getZoom(),
+                    bearing: e.getBearing(),
+                    pitch: e.getPitch(),
+                    center: e.getCenter()
+                  };
+                }
+              },
+              fitScreenCoordinates: {
+                events: [
+                  {
+                    name: "zoomend",
+                    check: function check(e, n) {
+                      return e.isZooming();
+                    }
+                  },
+                  {
+                    name: "moveend",
+                    check: function check(e, n) {
+                      return e.isMoving();
+                    }
+                  },
+                  {
+                    name: "rotateend",
+                    check: function check(e, n) {
+                      return n.bearing && e.isRotating();
+                    }
+                  }
+                ],
+                getter: function getter(e) {
+                  return {
+                    zoom: e.getZoom(),
+                    center: e.getCenter(),
+                    bearing: e.getBearing(),
+                    pitch: e.getPitch()
+                  };
+                }
+              },
+              jumpTo: i,
+              easeTo: i,
+              flyTo: i
+            };
+
+          function g(e) {
+            return (
+              (g =
+                "function" === typeof Symbol &&
+                "symbol" === _typeof__default["default"](Symbol.iterator)
+                  ? function(e) {
+                      return _typeof__default["default"](e);
+                    }
+                  : function(e) {
+                      return e &&
+                        "function" === typeof Symbol &&
+                        e.constructor === Symbol &&
+                        e !== Symbol.prototype
+                        ? "symbol"
+                        : _typeof__default["default"](e);
+                    }),
+              g(e)
+            );
+          }
+
+          function l(e, n) {
+            var t = Object.keys(e);
+
+            if (Object.getOwnPropertySymbols) {
+              var r = Object.getOwnPropertySymbols(e);
+              n &&
+                (r = r.filter(function(n) {
+                  return Object.getOwnPropertyDescriptor(e, n).enumerable;
+                })),
+                t.push.apply(t, r);
+            }
+
+            return t;
+          }
+
+          function m(e) {
+            for (var n = 1; n < arguments.length; n++) {
+              var t = null != arguments[n] ? arguments[n] : {};
+              n % 2
+                ? l(Object(t), !0).forEach(function(n) {
+                    s(e, n, t[n]);
+                  })
+                : Object.getOwnPropertyDescriptors
+                ? Object.defineProperties(
+                    e,
+                    Object.getOwnPropertyDescriptors(t)
+                  )
+                : l(Object(t)).forEach(function(n) {
+                    Object.defineProperty(
+                      e,
+                      n,
+                      Object.getOwnPropertyDescriptor(t, n)
+                    );
+                  });
+            }
+
+            return e;
+          }
+
+          function s(e, n, t) {
+            return (
+              n in e
+                ? Object.defineProperty(e, n, {
+                    value: t,
+                    enumerable: !0,
+                    configurable: !0,
+                    writable: !0
+                  })
+                : (e[n] = t),
+              e
+            );
+          }
+
+          function p(e) {
+            return "".concat(e, "-").concat(("" + Math.random()).split(".")[1]);
+          }
+
+          function d(e, n, t, r) {
+            var o = function o(i) {
+              i.type === n && i.eventId === t && (e.off(n, o), r(i));
+            };
+
+            return o;
+          }
+
+          function v(e, n) {
+            var t = e[n],
+              r = t.length;
+            return function() {
+              for (
+                var o = [],
+                  i = {
+                    eventId: p(n)
+                  },
+                  c = a[n].events.map(function(n, t) {
+                    return {
+                      event: n,
+                      func: new Promise(function(r, c) {
+                        (o[t] = {
+                          event: n,
+                          func: d(e, n.name, i.eventId, r)
+                        }),
+                          e.on(n.name, o[t].func);
+                      })
+                    };
+                  }),
+                  u = [],
+                  f = 0;
+                f < r;
+                f++
+              ) {
+                f === r - 1
+                  ? u.push(
+                      m(
+                        m({}, i),
+                        (f < 0 || arguments.length <= f
+                          ? void 0
+                          : arguments[f]) || {}
+                      )
+                    )
+                  : u.push(
+                      (f < 0 || arguments.length <= f
+                        ? void 0
+                        : arguments[f]) || null
+                    );
+              }
+
+              var l = [],
+                s = (arguments.length <= 0 ? void 0 : arguments[0]) || {};
+
+              try {
+                t.apply(e, u),
+                  "fitBounds" === n && (s = {}),
+                  "fitScreenCoordinates" === n &&
+                    ((s = {
+                      bearing: null
+                    }),
+                    (s.bearing = null),
+                    "number" ===
+                      typeof (arguments.length <= 2 ? void 0 : arguments[2]) &&
+                      (s.bearing =
+                        arguments.length <= 2 ? void 0 : arguments[2]),
+                    (arguments.length <= 3 ? void 0 : arguments[3]) &&
+                      "object" ===
+                        g(arguments.length <= 3 ? void 0 : arguments[3]) &&
+                      (s = m(
+                        m({}, s),
+                        arguments.length <= 3 ? void 0 : arguments[3]
+                      ))),
+                  (l = c.map(function(n) {
+                    var t = n.event,
+                      r = n.func;
+                    return t.check(e, s)
+                      ? r
+                      : (e.off(t.name, r), Promise.resolve());
+                  }));
+              } catch (v) {
+                throw (o.forEach(function(n) {
+                  var t = n.event,
+                    r = n.func;
+                  e.off(t.name, r);
+                }),
+                v);
+              }
+
+              return Promise.all(l).then(function() {
+                return a[n].getter(e);
+              });
+            };
+          }
+
+          var b = v,
+            h = function h(e) {
+              var n = Object.keys(a),
+                t = {};
+              return (
+                n.forEach(function(r) {
+                  -1 !== n.indexOf(r) && (t[r] = b(e, r));
+                }),
+                t
+              );
+            };
+
+          function y(e) {
+            var n =
+              arguments.length > 1 && void 0 !== arguments[1]
+                ? arguments[1]
+                : null;
+            return n ? b(e, n) : h(e);
+          }
+        }
+      ])["default"];
+    });
+  });
+  var promisify = /*@__PURE__*/ unwrapExports(mapPromisify);
+
+  function ownKeys$2(object, enumerableOnly) {
     var keys = Object.keys(object);
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
@@ -710,11 +1209,11 @@
     return keys;
   }
 
-  function _objectSpread$a(target) {
+  function _objectSpread$2(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$a(Object(source), true).forEach(function(key) {
+        ownKeys$2(Object(source), true).forEach(function(key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -723,7 +1222,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$a(Object(source)).forEach(function(key) {
+        ownKeys$2(Object(source)).forEach(function(key) {
           Object.defineProperty(
             target,
             key,
@@ -740,8 +1239,8 @@
     },
     methods: {
       $_registerAsyncActions: function $_registerAsyncActions(map) {
-        this.actions = _objectSpread$a(
-          _objectSpread$a({}, promisify__default["default"](map)),
+        this.actions = _objectSpread$2(
+          _objectSpread$2({}, promisify(map)),
           {},
           {
             stop: function stop() {
@@ -765,7 +1264,7 @@
     }
   };
 
-  function ownKeys$9(object, enumerableOnly) {
+  function ownKeys$3(object, enumerableOnly) {
     var keys = Object.keys(object);
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
@@ -778,11 +1277,11 @@
     return keys;
   }
 
-  function _objectSpread$9(target) {
+  function _objectSpread$3(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$9(Object(source), true).forEach(function(key) {
+        ownKeys$3(Object(source), true).forEach(function(key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -791,7 +1290,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$9(Object(source)).forEach(function(key) {
+        ownKeys$3(Object(source)).forEach(function(key) {
           Object.defineProperty(
             target,
             key,
@@ -810,7 +1309,7 @@
       withPrivateMethods,
       withEventsMixin
     ],
-    props: _objectSpread$9(
+    props: _objectSpread$3(
       {
         mapboxGl: {
           type: Object,
@@ -933,7 +1432,7 @@
     }
   };
 
-  function ownKeys$8(object, enumerableOnly) {
+  function ownKeys$4(object, enumerableOnly) {
     var keys = Object.keys(object);
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
@@ -946,11 +1445,11 @@
     return keys;
   }
 
-  function _objectSpread$8(target) {
+  function _objectSpread$4(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$8(Object(source), true).forEach(function(key) {
+        ownKeys$4(Object(source), true).forEach(function(key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -959,7 +1458,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$8(Object(source)).forEach(function(key) {
+        ownKeys$4(Object(source)).forEach(function(key) {
           Object.defineProperty(
             target,
             key,
@@ -979,7 +1478,7 @@
             : {};
         this.$_emitMapEvent(
           event,
-          _objectSpread$8(
+          _objectSpread$4(
             {
               control: this.control
             },
@@ -1180,7 +1679,7 @@
     }
   };
 
-  function ownKeys$7(object, enumerableOnly) {
+  function ownKeys$5(object, enumerableOnly) {
     var keys = Object.keys(object);
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
@@ -1193,11 +1692,11 @@
     return keys;
   }
 
-  function _objectSpread$7(target) {
+  function _objectSpread$5(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$7(Object(source), true).forEach(function(key) {
+        ownKeys$5(Object(source), true).forEach(function(key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -1206,7 +1705,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$7(Object(source)).forEach(function(key) {
+        ownKeys$5(Object(source)).forEach(function(key) {
           Object.defineProperty(
             target,
             key,
@@ -1282,7 +1781,7 @@
     mounted: function mounted() {
       var _this = this;
 
-      var markerOptions = _objectSpread$7({}, this.$props);
+      var markerOptions = _objectSpread$5({}, this.$props);
 
       if (this.$slots.marker) {
         markerOptions.element = this.$slots.marker[0].elm;
@@ -1847,7 +2346,7 @@
     render: function render() {}
   };
 
-  function ownKeys$5(object, enumerableOnly) {
+  function ownKeys$7(object, enumerableOnly) {
     var keys = Object.keys(object);
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
@@ -1860,11 +2359,11 @@
     return keys;
   }
 
-  function _objectSpread$5(target) {
+  function _objectSpread$7(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$5(Object(source), true).forEach(function(key) {
+        ownKeys$7(Object(source), true).forEach(function(key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -1873,7 +2372,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$5(Object(source)).forEach(function(key) {
+        ownKeys$7(Object(source)).forEach(function(key) {
           Object.defineProperty(
             target,
             key,
@@ -2027,7 +2526,7 @@
         this.map.on("dataloading", this.$_watchSourceLoading);
 
         if (this.source) {
-          var source = _objectSpread$5(
+          var source = _objectSpread$7(
             {
               type: "geojson"
             },
@@ -2063,7 +2562,7 @@
           }
         }
 
-        var layer = _objectSpread$5(
+        var layer = _objectSpread$7(
           {
             id: this.layerId,
             source: this.sourceId
@@ -2111,7 +2610,7 @@
     }
   };
 
-  function ownKeys$4(object, enumerableOnly) {
+  function ownKeys$8(object, enumerableOnly) {
     var keys = Object.keys(object);
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
@@ -2124,11 +2623,11 @@
     return keys;
   }
 
-  function _objectSpread$4(target) {
+  function _objectSpread$8(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$4(Object(source), true).forEach(function(key) {
+        ownKeys$8(Object(source), true).forEach(function(key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -2137,7 +2636,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$4(Object(source)).forEach(function(key) {
+        ownKeys$8(Object(source)).forEach(function(key) {
           Object.defineProperty(
             target,
             key,
@@ -2193,7 +2692,7 @@
     },
     methods: {
       $_deferredMount: function $_deferredMount() {
-        var source = _objectSpread$4(
+        var source = _objectSpread$8(
           {
             type: "image"
           },
@@ -2229,7 +2728,7 @@
           }
         }
 
-        var layer = _objectSpread$4(
+        var layer = _objectSpread$8(
           {
             id: this.layerId,
             source: this.sourceId,
@@ -2246,7 +2745,7 @@
     }
   };
 
-  function ownKeys$3(object, enumerableOnly) {
+  function ownKeys$9(object, enumerableOnly) {
     var keys = Object.keys(object);
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
@@ -2259,11 +2758,11 @@
     return keys;
   }
 
-  function _objectSpread$3(target) {
+  function _objectSpread$9(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$3(Object(source), true).forEach(function(key) {
+        ownKeys$9(Object(source), true).forEach(function(key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -2272,7 +2771,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$3(Object(source)).forEach(function(key) {
+        ownKeys$9(Object(source)).forEach(function(key) {
           Object.defineProperty(
             target,
             key,
@@ -2313,7 +2812,7 @@
     },
     methods: {
       $_deferredMount: function $_deferredMount() {
-        var source = _objectSpread$3(
+        var source = _objectSpread$9(
           {
             type: "canvas"
           },
@@ -2349,7 +2848,7 @@
           }
         }
 
-        var layer = _objectSpread$3(
+        var layer = _objectSpread$9(
           {
             id: this.layerId,
             source: this.sourceId,
@@ -2367,7 +2866,7 @@
     }
   };
 
-  function ownKeys$2(object, enumerableOnly) {
+  function ownKeys$a(object, enumerableOnly) {
     var keys = Object.keys(object);
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
@@ -2380,11 +2879,11 @@
     return keys;
   }
 
-  function _objectSpread$2(target) {
+  function _objectSpread$a(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$2(Object(source), true).forEach(function(key) {
+        ownKeys$a(Object(source), true).forEach(function(key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -2393,7 +2892,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$2(Object(source)).forEach(function(key) {
+        ownKeys$a(Object(source)).forEach(function(key) {
           Object.defineProperty(
             target,
             key,
@@ -2424,7 +2923,7 @@
     },
     methods: {
       $_deferredMount: function $_deferredMount() {
-        var source = _objectSpread$2(
+        var source = _objectSpread$a(
           {
             type: "video"
           },
@@ -2460,7 +2959,7 @@
           }
         }
 
-        var layer = _objectSpread$2(
+        var layer = _objectSpread$a(
           {
             id: this.layerId,
             source: this.sourceId,
@@ -2477,7 +2976,7 @@
     }
   };
 
-  function ownKeys$1(object, enumerableOnly) {
+  function ownKeys$b(object, enumerableOnly) {
     var keys = Object.keys(object);
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
@@ -2490,11 +2989,11 @@
     return keys;
   }
 
-  function _objectSpread$1(target) {
+  function _objectSpread$b(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$1(Object(source), true).forEach(function(key) {
+        ownKeys$b(Object(source), true).forEach(function(key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -2503,7 +3002,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$1(Object(source)).forEach(function(key) {
+        ownKeys$b(Object(source)).forEach(function(key) {
           Object.defineProperty(
             target,
             key,
@@ -2558,7 +3057,7 @@
     },
     methods: {
       $_deferredMount: function $_deferredMount() {
-        var source = _objectSpread$1(
+        var source = _objectSpread$b(
           {
             type: "vector"
           },
@@ -2595,7 +3094,7 @@
           }
         }
 
-        var layer = _objectSpread$1(
+        var layer = _objectSpread$b(
           {
             id: this.layerId,
             source: this.sourceId
@@ -2631,7 +3130,7 @@
     }
   };
 
-  function ownKeys(object, enumerableOnly) {
+  function ownKeys$c(object, enumerableOnly) {
     var keys = Object.keys(object);
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
@@ -2644,11 +3143,11 @@
     return keys;
   }
 
-  function _objectSpread(target) {
+  function _objectSpread$c(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys(Object(source), true).forEach(function(key) {
+        ownKeys$c(Object(source), true).forEach(function(key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -2657,7 +3156,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys(Object(source)).forEach(function(key) {
+        ownKeys$c(Object(source)).forEach(function(key) {
           Object.defineProperty(
             target,
             key,
@@ -2676,7 +3175,7 @@
     },
     methods: {
       $_deferredMount: function $_deferredMount() {
-        var source = _objectSpread(
+        var source = _objectSpread$c(
           {
             type: "raster"
           },
@@ -2713,7 +3212,7 @@
           }
         }
 
-        var layer = _objectSpread(
+        var layer = _objectSpread$c(
           {
             id: this.layerId,
             type: "raster",
