@@ -940,20 +940,18 @@
       }
     }, options),
     provide: function provide() {
-      var self = this;
+      var _this = this;
+
       return {
-        get mapbox() {
-          return self.mapbox;
-        },
-
-        get map() {
-          return self.map;
-        },
-
-        get actions() {
-          return self.actions;
-        }
-
+        mapbox: vue.computed(function () {
+          return _this.mapbox;
+        }),
+        map: vue.computed(function () {
+          return _this.map;
+        }),
+        actions: vue.computed(function () {
+          return _this.actions;
+        })
       };
     },
     data: function data() {
@@ -995,37 +993,37 @@
       this.mapboxPromise = this.mapboxGl ? Promise.resolve(this.mapboxGl) : import('mapbox-gl');
     },
     mounted: function mounted() {
-      var _this = this;
+      var _this2 = this;
 
       this.$_loadMap().then(function (map) {
-        _this.map = map;
+        _this2.map = map;
 
-        if (_this.RTLTextPluginUrl !== undefined && _this.mapbox.getRTLTextPluginStatus() !== "loaded") {
-          _this.mapbox.setRTLTextPlugin(_this.RTLTextPluginUrl, _this.$_RTLTextPluginError);
+        if (_this2.RTLTextPluginUrl !== undefined && _this2.mapbox.getRTLTextPluginStatus() !== "loaded") {
+          _this2.mapbox.setRTLTextPlugin(_this2.RTLTextPluginUrl, _this2.$_RTLTextPluginError);
         }
 
         var events = Object.values(mapEvents);
 
-        _this.$_bindMapEvents(events);
+        _this2.$_bindMapEvents(events);
 
-        _this.$_registerAsyncActions(map);
+        _this2.$_registerAsyncActions(map);
 
-        _this.$_bindPropsUpdateEvents();
+        _this2.$_bindPropsUpdateEvents();
 
-        _this.initial = false;
-        _this.initialized = true;
+        _this2.initial = false;
+        _this2.initialized = true;
 
-        _this.$emit("load", {
+        _this2.$emit("load", {
           map: map,
-          component: _this
+          component: _this2
         });
       });
     },
     beforeDestroy: function beforeDestroy() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$nextTick(function () {
-        if (_this2.map) _this2.map.remove();
+        if (_this3.map) _this3.map.remove();
       });
     },
     render: function render() {
@@ -1093,13 +1091,13 @@
     },
     beforeDestroy: function beforeDestroy() {
       if (this.map && this.control) {
-        this.map.removeControl(this.control);
+        this.map.value.removeControl(this.control);
       }
     },
     methods: {
       $_addControl: function $_addControl() {
         try {
-          this.map.addControl(this.control, this.position);
+          this.map.value.addControl(this.control, this.position);
         } catch (err) {
           this.$_emitEvent("error", {
             error: err
@@ -1129,7 +1127,7 @@
       }
     },
     created: function created() {
-      this.control = new this.mapbox.NavigationControl(this.$props);
+      this.control = new this.mapbox.value.NavigationControl(this.$props);
       this.$_addControl();
     }
   };
@@ -1171,7 +1169,7 @@
       }
     },
     created: function created() {
-      var GeolocateControl = this.mapbox.GeolocateControl;
+      var GeolocateControl = this.mapbox.value.GeolocateControl;
       this.control = new GeolocateControl(this.$props);
       this.$_addControl();
       this.$_bindSelfEvents(Object.keys(geolocationEvents), this.control);
@@ -1195,7 +1193,7 @@
       }
     },
     created: function created() {
-      this.control = new this.mapbox.FullscreenControl(this.$props);
+      this.control = new this.mapbox.value.FullscreenControl(this.$props);
       this.$_addControl();
     }
   };
@@ -1214,7 +1212,7 @@
       }
     },
     created: function created() {
-      this.control = new this.mapbox.AttributionControl(this.$props);
+      this.control = new this.mapbox.value.AttributionControl(this.$props);
       this.$_addControl();
     }
   };
@@ -1243,7 +1241,7 @@
       }
     },
     created: function created() {
-      this.control = new this.mapbox.ScaleControl(this.$props);
+      this.control = new this.mapbox.value.ScaleControl(this.$props);
       this.$_addControl();
     }
   };
@@ -1323,7 +1321,7 @@
         markerOptions.element = this.$slots.marker[0].elm;
       }
 
-      this.marker = new this.mapbox.Marker(markerOptions);
+      this.marker = new this.mapbox.value.Marker(markerOptions);
       var listeners = utils.extractListenersFromAttrs(this.$attrs);
 
       if (listeners["onUpdate:coordinates"]) {
@@ -1352,7 +1350,7 @@
     },
     methods: {
       $_addMarker: function $_addMarker() {
-        this.marker.setLngLat(this.coordinates).addTo(this.map);
+        this.marker.setLngLat(this.coordinates).addTo(this.map.value);
         this.$_bindMarkerDOMEvents();
         this.$_emitEvent("added", {
           marker: this.marker
@@ -1390,7 +1388,7 @@
         style: {
           display: "none"
         }
-      }, [this.$slots.marker, this.marker ? this.$slots.default : null]);
+      }, [this.$slots.marker(), this.marker ? this.$slots.default() : null]);
     }
   };
 
@@ -1500,7 +1498,7 @@
             if (!value) {
               this.popup.remove();
             } else {
-              this.popup.addTo(this.map);
+              this.popup.addTo(this.map.value);
             }
           }
         }
@@ -1522,7 +1520,7 @@
       }
     },
     created: function created() {
-      this.popup = new this.mapbox.Popup(this.$props);
+      this.popup = new this.mapbox.value.Popup(this.$props);
     },
     mounted: function mounted() {
       this.$_addPopup();
@@ -1536,7 +1534,7 @@
     },
     methods: {
       $_addPopup: function $_addPopup() {
-        this.popup = new this.mapbox.Popup(this.$props);
+        this.popup = new this.mapbox.value.Popup(this.$props);
 
         if (this.coordinates !== undefined) {
           this.popup.setLngLat(this.coordinates);
@@ -1590,7 +1588,7 @@
         style: {
           display: "none"
         }
-      }, [this.$slots.default]);
+      }, [this.$slots.default()]);
     }
   };
 
@@ -1662,27 +1660,27 @@
     },
     computed: {
       sourceLoaded: function sourceLoaded() {
-        return this.map ? this.map.isSourceLoaded(this.sourceId) : false;
+        return this.map ? this.map.value.isSourceLoaded(this.sourceId) : false;
       },
       mapLayer: function mapLayer() {
-        return this.map ? this.map.getLayer(this.layerId) : null;
+        return this.map ? this.map.value.getLayer(this.layerId) : null;
       },
       mapSource: function mapSource() {
-        return this.map ? this.map.getSource(this.sourceId) : null;
+        return this.map ? this.map.value.getSource(this.sourceId) : null;
       }
     },
     created: function created() {
       if (this.layer.minzoom) {
         this.$watch("layer.minzoom", function (next) {
           if (this.initial) return;
-          this.map.setLayerZoomRange(this.layerId, next, this.layer.maxzoom);
+          this.map.value.setLayerZoomRange(this.layerId, next, this.layer.maxzoom);
         });
       }
 
       if (this.layer.maxzoom) {
         this.$watch("layer.maxzoom", function (next) {
           if (this.initial) return;
-          this.map.setLayerZoomRange(this.layerId, this.layer.minzoom, next);
+          this.map.value.setLayerZoomRange(this.layerId, this.layer.minzoom, next);
         });
       }
 
@@ -1693,7 +1691,7 @@
           if (next) {
             for (var _i = 0, _Object$keys = Object.keys(next); _i < _Object$keys.length; _i++) {
               var prop = _Object$keys[_i];
-              this.map.setPaintProperty(this.layerId, prop, next[prop]);
+              this.map.value.setPaintProperty(this.layerId, prop, next[prop]);
             }
           }
         }, {
@@ -1708,7 +1706,7 @@
           if (next) {
             for (var _i2 = 0, _Object$keys2 = Object.keys(next); _i2 < _Object$keys2.length; _i2++) {
               var prop = _Object$keys2[_i2];
-              this.map.setLayoutProperty(this.layerId, prop, next[prop]);
+              this.map.value.setLayoutProperty(this.layerId, prop, next[prop]);
             }
           }
         }, {
@@ -1719,16 +1717,16 @@
       if (this.layer.filter) {
         this.$watch("layer.filter", function (next) {
           if (this.initial) return;
-          this.map.setFilter(this.layerId, next);
+          this.map.value.setFilter(this.layerId, next);
         }, {
           deep: true
         });
       }
     },
     beforeDestroy: function beforeDestroy() {
-      if (this.map && this.map.loaded()) {
+      if (this.map && this.map.value.loaded()) {
         try {
-          this.map.removeLayer(this.layerId);
+          this.map.value.removeLayer(this.layerId);
         } catch (err) {
           this.$_emitEvent("layer-does-not-exist", {
             layerId: this.sourceId,
@@ -1738,7 +1736,7 @@
 
         if (this.clearSource) {
           try {
-            this.map.removeSource(this.sourceId);
+            this.map.value.removeSource(this.sourceId);
           } catch (err) {
             this.$_emitEvent("source-does-not-exist", {
               sourceId: this.sourceId,
@@ -1763,7 +1761,7 @@
           var eventName = listenerKey.substring(2).toLowerCase();
 
           if (eventNames.includes(eventName)) {
-            _this.map.on(eventName, _this.layerId, _this.$_emitLayerMapEvent);
+            _this.map.value.on(eventName, _this.layerId, _this.$_emitLayerMapEvent);
           }
         });
       },
@@ -1772,7 +1770,7 @@
 
         if (this.map) {
           events.forEach(function (eventName) {
-            _this2.map.off(eventName, _this2.layerId, _this2.$_emitLayerMapEvent);
+            _this2.map.value.off(eventName, _this2.layerId, _this2.$_emitLayerMapEvent);
           });
         }
       },
@@ -1781,19 +1779,19 @@
           this.$_emitEvent("layer-source-loading", {
             sourceId: this.sourceId
           });
-          this.map.off("dataloading", this.$_watchSourceLoading);
+          this.map.value.off("dataloading", this.$_watchSourceLoading);
         }
       },
       move: function move(beforeId) {
-        this.map.moveLayer(this.layerId, beforeId);
+        this.map.value.moveLayer(this.layerId, beforeId);
         this.$_emitEvent("layer-moved", {
           layerId: this.layerId,
           beforeId: beforeId
         });
       },
       remove: function remove() {
-        this.map.removeLayer(this.layerId);
-        this.map.removeSource(this.sourceId);
+        this.map.value.removeLayer(this.layerId);
+        this.map.value.removeSource(this.sourceId);
         this.$_emitEvent("layer-removed", {
           layerId: this.layerId
         });
@@ -2245,7 +2243,7 @@
 
         return function (filter) {
           if (_this.map) {
-            return _this.map.querySourceFeatures(_this.sourceId, {
+            return _this.map.value.querySourceFeatures(_this.sourceId, {
               sourceLayer: _this.layer["source-layer"],
               filter: filter
             });
@@ -2259,7 +2257,7 @@
 
         return function (geometry, filter) {
           if (_this2.map) {
-            return _this2.map.queryRenderedFeatures(geometry, {
+            return _this2.map.value.queryRenderedFeatures(geometry, {
               layers: [_this2.layerId],
               filter: filter
             });
@@ -2272,7 +2270,7 @@
     watch: {
       filter: function filter(_filter) {
         if (this.initial) return;
-        this.map.setFilter(this.layerId, _filter);
+        this.map.value.setFilter(this.layerId, _filter);
       }
     },
     created: function created() {
@@ -2284,28 +2282,28 @@
           type: "vector"
         }, this.source);
 
-        this.map.on("dataloading", this.$_watchSourceLoading);
+        this.map.value.on("dataloading", this.$_watchSourceLoading);
 
         try {
-          this.map.addSource(this.sourceId, source);
+          this.map.value.addSource(this.sourceId, source);
         } catch (err) {
           if (this.replaceSource) {
-            this.map.removeSource(this.sourceId);
-            this.map.addSource(this.sourceId, source);
+            this.map.value.removeSource(this.sourceId);
+            this.map.value.addSource(this.sourceId, source);
           }
         }
 
         this.$_addLayer();
         this.$_bindLayerEvents(layerEventsConfig);
-        this.map.off("dataloading", this.$_watchSourceLoading);
+        this.map.value.off("dataloading", this.$_watchSourceLoading);
         this.initial = false;
       },
       $_addLayer: function $_addLayer() {
-        var existed = this.map.getLayer(this.layerId);
+        var existed = this.map.value.getLayer(this.layerId);
 
         if (existed) {
           if (this.replace) {
-            this.map.removeLayer(this.layerId);
+            this.map.value.removeLayer(this.layerId);
           } else {
             this.$_emitEvent("layer-exists", {
               layerId: this.layerId
@@ -2319,7 +2317,7 @@
           source: this.sourceId
         }, this.layer);
 
-        this.map.addLayer(layer, this.before);
+        this.map.value.addLayer(layer, this.before);
         this.$_emitEvent("added", {
           layerId: this.layerId
         });
@@ -2331,7 +2329,7 @@
             source: this.sourceId,
             "source-layer": this.layer["source-layer"]
           };
-          return this.map.setFeatureState(params, state);
+          return this.map.value.setFeatureState(params, state);
         }
       },
       getFeatureState: function getFeatureState(featureId) {
@@ -2341,7 +2339,7 @@
             source: this.source,
             "source-layer": this.layer["source-layer"]
           };
-          return this.map.getFeatureState(params);
+          return this.map.value.getFeatureState(params);
         }
       }
     }

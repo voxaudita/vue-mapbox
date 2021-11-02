@@ -148,7 +148,7 @@ export default {
           display: "none"
         }
       },
-      [this.$slots.marker, this.marker ? this.$slots.default : null]
+      [this.$slots.marker(), this.marker ? this.$slots.default() : null]
     );
   }
 };

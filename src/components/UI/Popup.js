@@ -209,7 +209,7 @@ export default {
           display: "none"
         }
       },
-      [this.$slots.default]
+      [this.$slots.default()]
     );
   }
 };

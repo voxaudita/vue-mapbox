@@ -1,4 +1,4 @@
-import { h } from 'vue';
+import { computed, h } from 'vue';
 import promisify from 'map-promisified';
 
 var withEventsMixin = {
@@ -495,17 +495,10 @@ var GlMap = {
   },
 
   provide() {
-    const self = this;
     return {
-      get mapbox() {
-        return self.mapbox;
-      },
-      get map() {
-        return self.map;
-      },
-      get actions() {
-        return self.actions;
-      }
+      mapbox: computed(() => this.mapbox),
+      map: computed(() => this.map),
+      actions: computed(() => this.actions),
     };
   },
 
@@ -637,14 +630,14 @@ var controlMixin = {
 
   beforeDestroy() {
     if (this.map && this.control) {
-      this.map.removeControl(this.control);
+      this.map.value.removeControl(this.control);
     }
   },
 
   methods: {
     $_addControl() {
       try {
-        this.map.addControl(this.control, this.position);
+        this.map.value.addControl(this.control, this.position);
       } catch (err) {
         this.$_emitEvent("error", { error: err });
         return;
@@ -672,7 +665,7 @@ var NavigationControl = {
   },
 
   created() {
-    this.control = new this.mapbox.NavigationControl(this.$props);
+    this.control = new this.mapbox.value.NavigationControl(this.$props);
     this.$_addControl();
   }
 };
@@ -713,7 +706,7 @@ var GeolocateControl = {
   },
 
   created() {
-    const GeolocateControl = this.mapbox.GeolocateControl;
+    const GeolocateControl = this.mapbox.value.GeolocateControl;
     this.control = new GeolocateControl(this.$props);
     this.$_addControl();
     this.$_bindSelfEvents(Object.keys(geolocationEvents), this.control);
@@ -740,7 +733,7 @@ var FullscreenControl = {
   },
 
   created() {
-    this.control = new this.mapbox.FullscreenControl(this.$props);
+    this.control = new this.mapbox.value.FullscreenControl(this.$props);
     this.$_addControl();
   }
 };
@@ -760,7 +753,7 @@ var AttributionControl = {
   },
 
   created() {
-    this.control = new this.mapbox.AttributionControl(this.$props);
+    this.control = new this.mapbox.value.AttributionControl(this.$props);
     this.$_addControl();
   }
 };
@@ -793,7 +786,7 @@ var ScaleControl = {
   },
 
   created() {
-    this.control = new this.mapbox.ScaleControl(this.$props);
+    this.control = new this.mapbox.value.ScaleControl(this.$props);
     this.$_addControl();
   }
 };
@@ -873,7 +866,7 @@ var Marker = {
     if (this.$slots.marker) {
       markerOptions.element = this.$slots.marker[0].elm;
     }
-    this.marker = new this.mapbox.Marker(markerOptions);
+    this.marker = new this.mapbox.value.Marker(markerOptions);
 
     const listeners = utils.extractListenersFromAttrs(this.$attrs);
 
@@ -904,7 +897,7 @@ var Marker = {
 
   methods: {
     $_addMarker() {
-      this.marker.setLngLat(this.coordinates).addTo(this.map);
+      this.marker.setLngLat(this.coordinates).addTo(this.map.value);
       this.$_bindMarkerDOMEvents();
       this.$_emitEvent("added", { marker: this.marker });
     },
@@ -943,7 +936,7 @@ var Marker = {
           display: "none"
         }
       },
-      [this.$slots.marker, this.marker ? this.$slots.default : null]
+      [this.$slots.marker(), this.marker ? this.$slots.default() : null]
     );
   }
 };
@@ -1062,7 +1055,7 @@ var Popup = {
           if (!value) {
             this.popup.remove();
           } else {
-            this.popup.addTo(this.map);
+            this.popup.addTo(this.map.value);
           }
         }
       }
@@ -1086,7 +1079,7 @@ var Popup = {
   },
 
   created() {
-    this.popup = new this.mapbox.Popup(this.$props);
+    this.popup = new this.mapbox.value.Popup(this.$props);
   },
 
   mounted() {
@@ -1103,7 +1096,7 @@ var Popup = {
 
   methods: {
     $_addPopup() {
-      this.popup = new this.mapbox.Popup(this.$props);
+      this.popup = new this.mapbox.value.Popup(this.$props);
       if (this.coordinates !== undefined) {
         this.popup.setLngLat(this.coordinates);
       }
@@ -1155,7 +1148,7 @@ var Popup = {
           display: "none"
         }
       },
-      [this.$slots.default]
+      [this.$slots.default()]
     );
   }
 };
@@ -1237,13 +1230,13 @@ var layerMixin = {
 
   computed: {
     sourceLoaded() {
-      return this.map ? this.map.isSourceLoaded(this.sourceId) : false;
+      return this.map ? this.map.value.isSourceLoaded(this.sourceId) : false;
     },
     mapLayer() {
-      return this.map ? this.map.getLayer(this.layerId) : null;
+      return this.map ? this.map.value.getLayer(this.layerId) : null;
     },
     mapSource() {
-      return this.map ? this.map.getSource(this.sourceId) : null;
+      return this.map ? this.map.value.getSource(this.sourceId) : null;
     }
   },
 
@@ -1251,14 +1244,14 @@ var layerMixin = {
     if (this.layer.minzoom) {
       this.$watch("layer.minzoom", function(next) {
         if (this.initial) return;
-        this.map.setLayerZoomRange(this.layerId, next, this.layer.maxzoom);
+        this.map.value.setLayerZoomRange(this.layerId, next, this.layer.maxzoom);
       });
     }
 
     if (this.layer.maxzoom) {
       this.$watch("layer.maxzoom", function(next) {
         if (this.initial) return;
-        this.map.setLayerZoomRange(this.layerId, this.layer.minzoom, next);
+        this.map.value.setLayerZoomRange(this.layerId, this.layer.minzoom, next);
       });
     }
 
@@ -1269,7 +1262,7 @@ var layerMixin = {
           if (this.initial) return;
           if (next) {
             for (let prop of Object.keys(next)) {
-              this.map.setPaintProperty(this.layerId, prop, next[prop]);
+              this.map.value.setPaintProperty(this.layerId, prop, next[prop]);
             }
           }
         },
@@ -1284,7 +1277,7 @@ var layerMixin = {
           if (this.initial) return;
           if (next) {
             for (let prop of Object.keys(next)) {
-              this.map.setLayoutProperty(this.layerId, prop, next[prop]);
+              this.map.value.setLayoutProperty(this.layerId, prop, next[prop]);
             }
           }
         },
@@ -1297,7 +1290,7 @@ var layerMixin = {
         "layer.filter",
         function(next) {
           if (this.initial) return;
-          this.map.setFilter(this.layerId, next);
+          this.map.value.setFilter(this.layerId, next);
         },
         { deep: true }
       );
@@ -1305,9 +1298,9 @@ var layerMixin = {
   },
 
   beforeDestroy() {
-    if (this.map && this.map.loaded()) {
+    if (this.map && this.map.value.loaded()) {
       try {
-        this.map.removeLayer(this.layerId);
+        this.map.value.removeLayer(this.layerId);
       } catch (err) {
         this.$_emitEvent("layer-does-not-exist", {
           layerId: this.sourceId,
@@ -1316,7 +1309,7 @@ var layerMixin = {
       }
       if (this.clearSource) {
         try {
-          this.map.removeSource(this.sourceId);
+          this.map.value.removeSource(this.sourceId);
         } catch (err) {
           this.$_emitEvent("source-does-not-exist", {
             sourceId: this.sourceId,
@@ -1338,7 +1331,7 @@ var layerMixin = {
       Object.keys(listeners).forEach(listenerKey => {
         const eventName = listenerKey.substring(2).toLowerCase();
         if (eventNames.includes(eventName)) {
-          this.map.on(eventName, this.layerId, this.$_emitLayerMapEvent);
+          this.map.value.on(eventName, this.layerId, this.$_emitLayerMapEvent);
         }
       });
     },
@@ -1346,7 +1339,7 @@ var layerMixin = {
     $_unbindEvents(events) {
       if (this.map) {
         events.forEach(eventName => {
-          this.map.off(eventName, this.layerId, this.$_emitLayerMapEvent);
+          this.map.value.off(eventName, this.layerId, this.$_emitLayerMapEvent);
         });
       }
     },
@@ -1354,12 +1347,12 @@ var layerMixin = {
     $_watchSourceLoading(data) {
       if (data.dataType === "source" && data.sourceId === this.sourceId) {
         this.$_emitEvent("layer-source-loading", { sourceId: this.sourceId });
-        this.map.off("dataloading", this.$_watchSourceLoading);
+        this.map.value.off("dataloading", this.$_watchSourceLoading);
       }
     },
 
     move(beforeId) {
-      this.map.moveLayer(this.layerId, beforeId);
+      this.map.value.moveLayer(this.layerId, beforeId);
       this.$_emitEvent("layer-moved", {
         layerId: this.layerId,
         beforeId: beforeId
@@ -1367,8 +1360,8 @@ var layerMixin = {
     },
 
     remove() {
-      this.map.removeLayer(this.layerId);
-      this.map.removeSource(this.sourceId);
+      this.map.value.removeLayer(this.layerId);
+      this.map.value.removeSource(this.sourceId);
       this.$_emitEvent("layer-removed", { layerId: this.layerId });
       this.$destroy();
     }
@@ -1780,7 +1773,7 @@ var VectorLayer = {
     getSourceFeatures() {
       return filter => {
         if (this.map) {
-          return this.map.querySourceFeatures(this.sourceId, {
+          return this.map.value.querySourceFeatures(this.sourceId, {
             sourceLayer: this.layer["source-layer"],
             filter
           });
@@ -1792,7 +1785,7 @@ var VectorLayer = {
     getRenderedFeatures() {
       return (geometry, filter) => {
         if (this.map) {
-          return this.map.queryRenderedFeatures(geometry, {
+          return this.map.value.queryRenderedFeatures(geometry, {
             layers: [this.layerId],
             filter
           });
@@ -1805,7 +1798,7 @@ var VectorLayer = {
   watch: {
     filter(filter) {
       if (this.initial) return;
-      this.map.setFilter(this.layerId, filter);
+      this.map.value.setFilter(this.layerId, filter);
     }
   },
 
@@ -1820,26 +1813,26 @@ var VectorLayer = {
         ...this.source
       };
 
-      this.map.on("dataloading", this.$_watchSourceLoading);
+      this.map.value.on("dataloading", this.$_watchSourceLoading);
       try {
-        this.map.addSource(this.sourceId, source);
+        this.map.value.addSource(this.sourceId, source);
       } catch (err) {
         if (this.replaceSource) {
-          this.map.removeSource(this.sourceId);
-          this.map.addSource(this.sourceId, source);
+          this.map.value.removeSource(this.sourceId);
+          this.map.value.addSource(this.sourceId, source);
         }
       }
       this.$_addLayer();
       this.$_bindLayerEvents(layerEventsConfig);
-      this.map.off("dataloading", this.$_watchSourceLoading);
+      this.map.value.off("dataloading", this.$_watchSourceLoading);
       this.initial = false;
     },
 
     $_addLayer() {
-      let existed = this.map.getLayer(this.layerId);
+      let existed = this.map.value.getLayer(this.layerId);
       if (existed) {
         if (this.replace) {
-          this.map.removeLayer(this.layerId);
+          this.map.value.removeLayer(this.layerId);
         } else {
           this.$_emitEvent("layer-exists", { layerId: this.layerId });
           return existed;
@@ -1851,7 +1844,7 @@ var VectorLayer = {
         ...this.layer
       };
 
-      this.map.addLayer(layer, this.before);
+      this.map.value.addLayer(layer, this.before);
       this.$_emitEvent("added", { layerId: this.layerId });
     },
 
@@ -1862,7 +1855,7 @@ var VectorLayer = {
           source: this.sourceId,
           "source-layer": this.layer["source-layer"]
         };
-        return this.map.setFeatureState(params, state);
+        return this.map.value.setFeatureState(params, state);
       }
     },
 
@@ -1873,7 +1866,7 @@ var VectorLayer = {
           source: this.source,
           "source-layer": this.layer["source-layer"]
         };
-        return this.map.getFeatureState(params);
+        return this.map.value.getFeatureState(params);
       }
     }
   }
