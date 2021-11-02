@@ -115,7 +115,7 @@ export default {
     }
     return h("div", { class: "mgl-map-wrapper" }, [
       this.$_containerVNode,
-      this.initialized ? this.$slots.default : null
+      this.initialized ? this.$slots.default() : null
     ]);
   }
 };
