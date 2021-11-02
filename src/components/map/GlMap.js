@@ -1,4 +1,4 @@
-import { h } from "vue";
+import { h, computed } from "vue";
 import "../../styles/index.css";
 import withEvents from "../../lib/withEvents";
 import mapEvents from "./events";
@@ -21,17 +21,10 @@ export default {
   },
 
   provide() {
-    const self = this;
     return {
-      get mapbox() {
-        return self.mapbox;
-      },
-      get map() {
-        return self.map;
-      },
-      get actions() {
-        return self.actions;
-      }
+      mapbox: computed(() => this.mapbox),
+      map: computed(() => this.map),
+      actions: computed(() => this.actions),
     };
   },
 

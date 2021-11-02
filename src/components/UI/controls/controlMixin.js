@@ -15,14 +15,14 @@ export default {
 
   beforeDestroy() {
     if (this.map && this.control) {
-      this.map.removeControl(this.control);
+      this.map.value.removeControl(this.control);
     }
   },
 
   methods: {
     $_addControl() {
       try {
-        this.map.addControl(this.control, this.position);
+        this.map.value.addControl(this.control, this.position);
       } catch (err) {
         this.$_emitEvent("error", { error: err });
         return;

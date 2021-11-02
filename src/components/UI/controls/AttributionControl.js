@@ -15,7 +15,7 @@ export default {
   },
 
   created() {
-    this.control = new this.mapbox.AttributionControl(this.$props);
+    this.control = new this.mapbox.value.AttributionControl(this.$props);
     this.$_addControl();
   }
 };

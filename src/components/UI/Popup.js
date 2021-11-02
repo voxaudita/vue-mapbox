@@ -116,7 +116,7 @@ export default {
           if (!value) {
             this.popup.remove();
           } else {
-            this.popup.addTo(this.map);
+            this.popup.addTo(this.map.value);
           }
         }
       }
@@ -140,7 +140,7 @@ export default {
   },
 
   created() {
-    this.popup = new this.mapbox.Popup(this.$props);
+    this.popup = new this.mapbox.value.Popup(this.$props);
   },
 
   mounted() {
@@ -157,7 +157,7 @@ export default {
 
   methods: {
     $_addPopup() {
-      this.popup = new this.mapbox.Popup(this.$props);
+      this.popup = new this.mapbox.value.Popup(this.$props);
       if (this.coordinates !== undefined) {
         this.popup.setLngLat(this.coordinates);
       }

@@ -12,7 +12,7 @@ export default {
   },
 
   created() {
-    this.control = new this.mapbox.FullscreenControl(this.$props);
+    this.control = new this.mapbox.value.FullscreenControl(this.$props);
     this.$_addControl();
   }
 };
