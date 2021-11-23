@@ -10,6 +10,8 @@ import withAsyncActions from "./mixins/withAsyncActions";
 export default {
   name: "GlMap",
 
+  emits: ['load', 'click', 'mousemove', 'mouseout', 'zoomend', 'moveend', 'sourcedata'],
+
   mixins: [withWatchers, withAsyncActions, withPrivateMethods, withEvents],
 
   props: {
