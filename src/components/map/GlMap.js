@@ -10,7 +10,7 @@ import withAsyncActions from "./mixins/withAsyncActions";
 export default {
   name: "GlMap",
 
-  emits: ['load', 'click', 'mousemove', 'mouseout', 'zoomend', 'moveend', 'sourcedata'],
+  emits: Object.values(events).map(event => event.name),
 
   mixins: [withWatchers, withAsyncActions, withPrivateMethods, withEvents],
 
@@ -102,7 +102,7 @@ export default {
   },
 
   render() {
-    if (!this.$$_containerVNode) {
+    if (!this.$_containerVNode) {
       this.$_containerVNode = h("div", {
         id: this.container,
         ref: "container"

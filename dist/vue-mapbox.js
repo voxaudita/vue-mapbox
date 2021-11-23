@@ -484,6 +484,8 @@ var withAsyncActions = {
 var GlMap = {
   name: "GlMap",
 
+  emits: Object.values(events).map(event => event.name),
+
   mixins: [withWatchers, withAsyncActions, withPrivateMethods, withEventsMixin],
 
   props: {
@@ -574,7 +576,7 @@ var GlMap = {
   },
 
   render() {
-    if (!this.$$_containerVNode) {
+    if (!this.$_containerVNode) {
       this.$_containerVNode = h("div", {
         id: this.container,
         ref: "container"
