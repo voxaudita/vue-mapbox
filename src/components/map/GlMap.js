@@ -10,7 +10,7 @@ import withAsyncActions from "./mixins/withAsyncActions";
 export default {
   name: "GlMap",
 
-  emits: Object.values(events).map(event => event.name),
+  emits: Object.values(mapEvents).map(event => event.name),
 
   mixins: [withWatchers, withAsyncActions, withPrivateMethods, withEvents],
 

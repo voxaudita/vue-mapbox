@@ -484,7 +484,7 @@ var withAsyncActions = {
 var GlMap = {
   name: "GlMap",
 
-  emits: Object.values(events).map(event => event.name),
+  emits: Object.values(mapEvents).map(event => event.name),
 
   mixins: [withWatchers, withAsyncActions, withPrivateMethods, withEventsMixin],
 
