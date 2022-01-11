@@ -33,7 +33,7 @@
     ]
   },
   "dependencies": {
-    "map-promisified": "git://github.com/soal/map-promisified#b9bb95f"
+    "map-promisified": "https://github.com/soal/map-promisified#b9bb95f"
   },
   "peerDependencies": {
     "mapbox-gl": "^1.12.0",
