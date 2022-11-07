@@ -1,17 +1,75 @@
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@babel/runtime/helpers/defineProperty'), require('vue'), require('@babel/runtime/helpers/typeof')) :
-  typeof define === 'function' && define.amd ? define(['exports', '@babel/runtime/helpers/defineProperty', 'vue', '@babel/runtime/helpers/typeof'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['vue-mapbox'] = {}, global._defineProperty, global.vue, global._typeof));
-}(this, (function (exports, _defineProperty, vue, _typeof) { 'use strict';
+(function(global, factory) {
+  typeof exports === "object" && typeof module !== "undefined"
+    ? factory(
+        exports,
+        require("@babel/runtime/helpers/defineProperty"),
+        require("vue"),
+        require("@babel/runtime/helpers/typeof")
+      )
+    : typeof define === "function" && define.amd
+    ? define([
+        "exports",
+        "@babel/runtime/helpers/defineProperty",
+        "vue",
+        "@babel/runtime/helpers/typeof"
+      ], factory)
+    : ((global =
+        typeof globalThis !== "undefined" ? globalThis : global || self),
+      factory(
+        (global["vue-mapbox"] = {}),
+        global._defineProperty,
+        global.vue,
+        global._typeof
+      ));
+})(this, function(exports, _defineProperty, vue, _typeof) {
+  "use strict";
 
-  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+  function _interopDefaultLegacy(e) {
+    return e && typeof e === "object" && "default" in e ? e : { default: e };
+  }
 
-  var _defineProperty__default = /*#__PURE__*/_interopDefaultLegacy(_defineProperty);
-  var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
+  var _defineProperty__default = /*#__PURE__*/ _interopDefaultLegacy(
+    _defineProperty
+  );
+  var _typeof__default = /*#__PURE__*/ _interopDefaultLegacy(_typeof);
 
-  function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly)
+        symbols = symbols.filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
 
-  function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty__default['default'](target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function(key) {
+          _defineProperty__default["default"](target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(
+          target,
+          Object.getOwnPropertyDescriptors(source)
+        );
+      } else {
+        ownKeys(Object(source)).forEach(function(key) {
+          Object.defineProperty(
+            target,
+            key,
+            Object.getOwnPropertyDescriptor(source, key)
+          );
+        });
+      }
+    }
+    return target;
+  }
 
   var withEventsMixin = {
     methods: {
@@ -22,11 +80,20 @@
        * @param {Object} [data={}] Additional data
        */
       $_emitEvent: function $_emitEvent(name) {
-        var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-        this.$emit(name, _objectSpread({
-          map: this.map,
-          component: this
-        }, data));
+        var data =
+          arguments.length > 1 && arguments[1] !== undefined
+            ? arguments[1]
+            : {};
+        this.$emit(
+          name,
+          _objectSpread(
+            {
+              map: this.map,
+              component: this
+            },
+            data
+          )
+        );
       },
 
       /**
@@ -35,10 +102,19 @@
        * @param {Object} event
        */
       $_emitMapEvent: function $_emitMapEvent(event) {
-        var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-        this.$_emitEvent(event.type, _objectSpread({
-          mapboxEvent: event
-        }, data));
+        var data =
+          arguments.length > 1 && arguments[1] !== undefined
+            ? arguments[1]
+            : {};
+        this.$_emitEvent(
+          event.type,
+          _objectSpread(
+            {
+              mapboxEvent: event
+            },
+            data
+          )
+        );
       }
     }
   };
@@ -272,7 +348,12 @@
       type: String,
       default: "bottom-left",
       validator: function validator(val) {
-        return ["top-left", "top-right", "bottom-left", "bottom-right"].includes(val);
+        return [
+          "top-left",
+          "top-right",
+          "bottom-left",
+          "bottom-right"
+        ].includes(val);
       }
     },
     failIfMajorPerformanceCaveat: {
@@ -475,7 +556,7 @@
     if (listeners["onUpdate:".concat(prop)]) {
       if (this.propsIsUpdating[prop]) {
         this._watcher.active = false;
-        this.$nextTick(function () {
+        this.$nextTick(function() {
           _this._watcher.active = true;
         });
       } else {
@@ -491,8 +572,8 @@
 
   function makeWatchers() {
     var wrappers = {};
-    Object.entries(watchers).forEach(function (prop) {
-      wrappers[prop[0]] = function (next, prev) {
+    Object.entries(watchers).forEach(function(prop) {
+      wrappers[prop[0]] = function(next, prev) {
         return watcher.call(this, prop[0], prop[1].bind(this), next, prev);
       };
     });
@@ -503,15 +584,52 @@
     watch: makeWatchers()
   };
 
-  function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$1(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly)
+        symbols = symbols.filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
 
-  function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { _defineProperty__default['default'](target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$1(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+      if (i % 2) {
+        ownKeys$1(Object(source), true).forEach(function(key) {
+          _defineProperty__default["default"](target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(
+          target,
+          Object.getOwnPropertyDescriptors(source)
+        );
+      } else {
+        ownKeys$1(Object(source)).forEach(function(key) {
+          Object.defineProperty(
+            target,
+            key,
+            Object.getOwnPropertyDescriptor(source, key)
+          );
+        });
+      }
+    }
+    return target;
+  }
   var withPrivateMethods = {
     methods: {
-      $_updateSyncedPropsFabric: function $_updateSyncedPropsFabric(prop, data) {
+      $_updateSyncedPropsFabric: function $_updateSyncedPropsFabric(
+        prop,
+        data
+      ) {
         var _this = this;
 
-        return function () {
+        return function() {
           _this.propsIsUpdating[prop] = true;
           var info = typeof data === "function" ? data() : data;
           return _this.$emit("update:".concat(prop), info);
@@ -520,43 +638,52 @@
       $_bindPropsUpdateEvents: function $_bindPropsUpdateEvents() {
         var _this2 = this;
 
-        var syncedProps = [{
-          events: ["moveend"],
-          prop: "center",
-          getter: this.map.getCenter.bind(this.map)
-        }, {
-          events: ["zoomend"],
-          prop: "zoom",
-          getter: this.map.getZoom.bind(this.map)
-        }, {
-          events: ["rotate"],
-          prop: "bearing",
-          getter: this.map.getBearing.bind(this.map)
-        }, {
-          events: ["pitch"],
-          prop: "pitch",
-          getter: this.map.getPitch.bind(this.map)
-        }, {
-          events: ["moveend", "zoomend", "rotate", "pitch"],
-          prop: "bounds",
-          getter: function getter() {
-            var newBounds = _this2.map.getBounds();
+        var syncedProps = [
+          {
+            events: ["moveend"],
+            prop: "center",
+            getter: this.map.getCenter.bind(this.map)
+          },
+          {
+            events: ["zoomend"],
+            prop: "zoom",
+            getter: this.map.getZoom.bind(this.map)
+          },
+          {
+            events: ["rotate"],
+            prop: "bearing",
+            getter: this.map.getBearing.bind(this.map)
+          },
+          {
+            events: ["pitch"],
+            prop: "pitch",
+            getter: this.map.getPitch.bind(this.map)
+          },
+          {
+            events: ["moveend", "zoomend", "rotate", "pitch"],
+            prop: "bounds",
+            getter: function getter() {
+              var newBounds = _this2.map.getBounds();
 
-            if (_this2.$props.bounds instanceof Array) {
-              newBounds = newBounds.toArray();
+              if (_this2.$props.bounds instanceof Array) {
+                newBounds = newBounds.toArray();
+              }
+
+              return newBounds;
             }
-
-            return newBounds;
           }
-        }];
+        ];
         var listeners = utils.extractListenersFromAttrs(this.$attrs);
-        syncedProps.forEach(function (_ref) {
+        syncedProps.forEach(function(_ref) {
           var events = _ref.events,
-              prop = _ref.prop,
-              getter = _ref.getter;
-          events.forEach(function (event) {
+            prop = _ref.prop,
+            getter = _ref.getter;
+          events.forEach(function(event) {
             if (listeners["onUpdate:".concat(prop)]) {
-              _this2.map.on(event, _this2.$_updateSyncedPropsFabric(prop, getter));
+              _this2.map.on(
+                event,
+                _this2.$_updateSyncedPropsFabric(prop, getter)
+              );
             }
           });
         });
@@ -564,15 +691,22 @@
       $_loadMap: function $_loadMap() {
         var _this3 = this;
 
-        return this.mapboxPromise.then(function (mapbox) {
+        return this.mapboxPromise.then(function(mapbox) {
           _this3.mapbox = mapbox.default ? mapbox.default : mapbox;
-          return new Promise(function (resolve) {
-            if (_this3.accessToken) _this3.mapbox.accessToken = _this3.accessToken;
-            var map = new _this3.mapbox.Map(_objectSpread$1(_objectSpread$1({}, _this3._props), {}, {
-              container: _this3.$refs.container,
-              style: _this3.mapStyle
-            }));
-            map.on("load", function () {
+          return new Promise(function(resolve) {
+            if (_this3.accessToken)
+              _this3.mapbox.accessToken = _this3.accessToken;
+            var map = new _this3.mapbox.Map(
+              _objectSpread$1(
+                _objectSpread$1({}, _this3._props),
+                {},
+                {
+                  container: _this3.$refs.container,
+                  style: _this3.mapStyle
+                }
+              )
+            );
+            map.on("load", function() {
               return resolve(map);
             });
           });
@@ -587,11 +721,11 @@
       $_bindMapEvents: function $_bindMapEvents(events) {
         var _this4 = this;
 
-        var eventNames = events.map(function (event) {
+        var eventNames = events.map(function(event) {
           return event.name;
         });
         var listeners = utils.extractListenersFromAttrs(this.$attrs);
-        Object.keys(listeners).forEach(function (listenerKey) {
+        Object.keys(listeners).forEach(function(listenerKey) {
           var eventName = listenerKey.substring(2).toLowerCase();
 
           if (eventNames.includes(eventName)) {
@@ -602,38 +736,87 @@
       $_unbindEvents: function $_unbindEvents(events) {
         var _this5 = this;
 
-        events.forEach(function (eventName) {
+        events.forEach(function(eventName) {
           _this5.map.off(eventName, _this5.$_emitMapEvent);
         });
       }
     }
   };
 
-  function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$2(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly)
+        symbols = symbols.filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
 
-  function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { _defineProperty__default['default'](target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+      if (i % 2) {
+        ownKeys$2(Object(source), true).forEach(function(key) {
+          _defineProperty__default["default"](target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(
+          target,
+          Object.getOwnPropertyDescriptors(source)
+        );
+      } else {
+        ownKeys$2(Object(source)).forEach(function(key) {
+          Object.defineProperty(
+            target,
+            key,
+            Object.getOwnPropertyDescriptor(source, key)
+          );
+        });
+      }
+    }
+    return target;
+  }
 
-  var composedMethodEvents = [{
-    name: 'moveend',
-    check: function check(map, options) {
-      return options.center && map.isMoving();
+  var composedMethodEvents = [
+    {
+      name: "moveend",
+      check: function check(map, options) {
+        return options.center && map.isMoving();
+      }
+    },
+    {
+      name: "zoomend",
+      check: function check(map, options) {
+        return (
+          options.zoom !== undefined && options.zoom !== null && map.isZooming()
+        );
+      }
+    },
+    {
+      name: "rotateend",
+      check: function check(map, options) {
+        return (
+          options.bearing !== undefined &&
+          options.bearing !== null &&
+          map.isRotating()
+        );
+      }
+    },
+    {
+      name: "pitchend",
+      check: function check(map, options) {
+        return (
+          options.pitch !== undefined &&
+          options.bearing !== null &&
+          map.isMoving()
+        );
+      }
     }
-  }, {
-    name: 'zoomend',
-    check: function check(map, options) {
-      return options.zoom !== undefined && options.zoom !== null && map.isZooming();
-    }
-  }, {
-    name: 'rotateend',
-    check: function check(map, options) {
-      return options.bearing !== undefined && options.bearing !== null && map.isRotating();
-    }
-  }, {
-    name: 'pitchend',
-    check: function check(map, options) {
-      return options.pitch !== undefined && options.bearing !== null && map.isMoving();
-    }
-  }];
+  ];
 
   var composedMethodGetter = function composedMethodGetter(map) {
     return {
@@ -649,12 +832,14 @@
     getter: composedMethodGetter
   };
   var moveMethodConfig = {
-    events: [{
-      name: 'moveend',
-      check: function check(map) {
-        return map.isMoving();
+    events: [
+      {
+        name: "moveend",
+        check: function check(map) {
+          return map.isMoving();
+        }
       }
-    }],
+    ],
     getter: function getter(map) {
       return {
         center: map.getCenter()
@@ -662,12 +847,14 @@
     }
   };
   var zoomMethodConfig = {
-    events: [{
-      name: 'zoomend',
-      check: function check(map) {
-        return map.isZooming();
+    events: [
+      {
+        name: "zoomend",
+        check: function check(map) {
+          return map.isZooming();
+        }
       }
-    }],
+    ],
     getter: function getter(map) {
       return {
         zoom: map.getZoom()
@@ -675,12 +862,14 @@
     }
   };
   var rotateMethodConfig = {
-    events: [{
-      name: 'rotateend',
-      check: function check(map) {
-        return map.isRotating();
+    events: [
+      {
+        name: "rotateend",
+        check: function check(map) {
+          return map.isRotating();
+        }
       }
-    }],
+    ],
     getter: function getter(map) {
       return {
         bearing: map.getBearing()
@@ -700,12 +889,14 @@
     resetNorth: rotateMethodConfig,
     snapToNorth: rotateMethodConfig,
     setPitch: {
-      events: [{
-        name: 'pitchend',
-        check: function check(map) {
-          return true;
+      events: [
+        {
+          name: "pitchend",
+          check: function check(map) {
+            return true;
+          }
         }
-      }],
+      ],
       getter: function getter(map) {
         return {
           pitch: map.getPitch()
@@ -713,22 +904,26 @@
       }
     },
     fitBounds: {
-      events: [{
-        name: 'zoomend',
-        check: function check(map) {
-          return map.isZooming();
+      events: [
+        {
+          name: "zoomend",
+          check: function check(map) {
+            return map.isZooming();
+          }
+        },
+        {
+          name: "moveend",
+          check: function check(map) {
+            return map.isMoving();
+          }
+        },
+        {
+          name: "rotateend",
+          check: function check(map) {
+            return map.isRotating();
+          }
         }
-      }, {
-        name: 'moveend',
-        check: function check(map) {
-          return map.isMoving();
-        }
-      }, {
-        name: 'rotateend',
-        check: function check(map) {
-          return map.isRotating();
-        }
-      }],
+      ],
       getter: function getter(map) {
         return {
           zoom: map.getZoom(),
@@ -739,22 +934,26 @@
       }
     },
     fitScreenCoordinates: {
-      events: [{
-        name: 'zoomend',
-        check: function check(map, options) {
-          return map.isZooming();
+      events: [
+        {
+          name: "zoomend",
+          check: function check(map, options) {
+            return map.isZooming();
+          }
+        },
+        {
+          name: "moveend",
+          check: function check(map, options) {
+            return map.isMoving();
+          }
+        },
+        {
+          name: "rotateend",
+          check: function check(map, options) {
+            return options.bearing && map.isRotating();
+          }
         }
-      }, {
-        name: 'moveend',
-        check: function check(map, options) {
-          return map.isMoving();
-        }
-      }, {
-        name: 'rotateend',
-        check: function check(map, options) {
-          return options.bearing && map.isRotating();
-        }
-      }],
+      ],
       getter: function getter(map) {
         return {
           zoom: map.getZoom(),
@@ -770,7 +969,9 @@
   };
 
   function generateEventId(methodName) {
-    return "".concat(methodName, "-").concat(('' + Math.random()).split('.')[1]);
+    return ""
+      .concat(methodName, "-")
+      .concat(("" + Math.random()).split(".")[1]);
   }
 
   function catchEventFabric(map, eventName, eventId, resolve) {
@@ -789,19 +990,24 @@
   function promisifyMethod(map, methodName) {
     var method = map[methodName];
     var argsCount = method.length;
-    return function () {
+    return function() {
       var handlers = [];
       var eventData = {
         eventId: generateEventId(methodName)
       }; // Creating list of events and event listeners
 
-      var catchers = methodsData[methodName].events.map(function (event, index) {
+      var catchers = methodsData[methodName].events.map(function(event, index) {
         return {
           event: event,
-          func: new Promise(function (resolve, reject) {
+          func: new Promise(function(resolve, reject) {
             handlers[index] = {
               event: event,
-              func: catchEventFabric(map, event.name, eventData.eventId, resolve)
+              func: catchEventFabric(
+                map,
+                event.name,
+                eventData.eventId,
+                resolve
+              )
             };
             map.on(event.name, handlers[index].func);
           })
@@ -813,10 +1019,17 @@
         if (i === argsCount - 1) {
           // If args[i] is last argument, we assume that this is eventData argument,
           // merge it with eventData passed by user and add in the end of list of arguments
-          argsArray.push(_objectSpread$2(_objectSpread$2({}, eventData), (i < 0 || arguments.length <= i ? undefined : arguments[i]) || {}));
+          argsArray.push(
+            _objectSpread$2(
+              _objectSpread$2({}, eventData),
+              (i < 0 || arguments.length <= i ? undefined : arguments[i]) || {}
+            )
+          );
         } else {
           // If args[i] is not last argument, just add it in the list of arguments
-          argsArray.push((i < 0 || arguments.length <= i ? undefined : arguments[i]) || null);
+          argsArray.push(
+            (i < 0 || arguments.length <= i ? undefined : arguments[i]) || null
+          );
         }
       }
 
@@ -829,30 +1042,40 @@
         // just return resolved promise
         // .fitBounds() and .fitScreenCoordinates() needs special processing due to different number of arguments
 
-        if (methodName === 'fitBounds') {
+        if (methodName === "fitBounds") {
           // args[0] is bounding box, options is args[1], but we don't need them to calculate events to listen
           options = {};
         }
 
-        if (methodName === 'fitScreenCoordinates') {
+        if (methodName === "fitScreenCoordinates") {
           options = {
             bearing: null
           };
           options.bearing = null; // bearing can be passed by user as optional argument
 
-          if (typeof (arguments.length <= 2 ? undefined : arguments[2]) === 'number') {
+          if (
+            typeof (arguments.length <= 2 ? undefined : arguments[2]) ===
+            "number"
+          ) {
             options.bearing = arguments.length <= 2 ? undefined : arguments[2];
           } // pass bearing merged with other options
 
-
-          if ((arguments.length <= 3 ? undefined : arguments[3]) && _typeof__default['default'](arguments.length <= 3 ? undefined : arguments[3]) === 'object') {
-            options = _objectSpread$2(_objectSpread$2({}, options), arguments.length <= 3 ? undefined : arguments[3]);
+          if (
+            (arguments.length <= 3 ? undefined : arguments[3]) &&
+            _typeof__default["default"](
+              arguments.length <= 3 ? undefined : arguments[3]
+            ) === "object"
+          ) {
+            options = _objectSpread$2(
+              _objectSpread$2({}, options),
+              arguments.length <= 3 ? undefined : arguments[3]
+            );
           }
         }
 
-        funcs = catchers.map(function (_ref) {
+        funcs = catchers.map(function(_ref) {
           var event = _ref.event,
-              func = _ref.func;
+            func = _ref.func;
 
           if (event.check(map, options)) {
             return func;
@@ -862,15 +1085,15 @@
           }
         });
       } catch (err) {
-        handlers.forEach(function (_ref2) {
+        handlers.forEach(function(_ref2) {
           var event = _ref2.event,
-              func = _ref2.func;
+            func = _ref2.func;
           map.off(event.name, func);
         });
         throw err;
       }
 
-      return Promise.all(funcs).then(function () {
+      return Promise.all(funcs).then(function() {
         return methodsData[methodName].getter(map);
       });
     };
@@ -879,7 +1102,7 @@
   function promisifyMap(map) {
     var toPromisify = Object.keys(methodsData);
     var actions = {};
-    toPromisify.forEach(function (key) {
+    toPromisify.forEach(function(key) {
       if (toPromisify.indexOf(key) !== -1) {
         actions[key] = promisifyMethod(map, key);
       }
@@ -888,7 +1111,8 @@
   }
 
   function promisify(map) {
-    var methodName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var methodName =
+      arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
     if (methodName) {
       return promisifyMethod(map, methodName);
@@ -897,59 +1121,139 @@
     }
   }
 
-  function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$3(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly)
+        symbols = symbols.filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
 
-  function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { _defineProperty__default['default'](target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$3(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+      if (i % 2) {
+        ownKeys$3(Object(source), true).forEach(function(key) {
+          _defineProperty__default["default"](target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(
+          target,
+          Object.getOwnPropertyDescriptors(source)
+        );
+      } else {
+        ownKeys$3(Object(source)).forEach(function(key) {
+          Object.defineProperty(
+            target,
+            key,
+            Object.getOwnPropertyDescriptor(source, key)
+          );
+        });
+      }
+    }
+    return target;
+  }
   var withAsyncActions = {
     created: function created() {
       this.actions = {};
     },
     methods: {
       $_registerAsyncActions: function $_registerAsyncActions(map) {
-        this.actions = _objectSpread$3(_objectSpread$3({}, promisify(map)), {}, {
-          stop: function stop() {
-            var _this = this;
+        this.actions = _objectSpread$3(
+          _objectSpread$3({}, promisify(map)),
+          {},
+          {
+            stop: function stop() {
+              var _this = this;
 
-            this.map.stop();
-            var updatedProps = {
-              pitch: this.map.getPitch(),
-              zoom: this.map.getZoom(),
-              bearing: this.map.getBearing(),
-              center: this.map.getCenter()
-            };
-            Object.entries(updatedProps).forEach(function (prop) {
-              _this.$_updateSyncedPropsFabric(prop[0], prop[1])();
-            });
-            return Promise.resolve(updatedProps);
+              this.map.stop();
+              var updatedProps = {
+                pitch: this.map.getPitch(),
+                zoom: this.map.getZoom(),
+                bearing: this.map.getBearing(),
+                center: this.map.getCenter()
+              };
+              Object.entries(updatedProps).forEach(function(prop) {
+                _this.$_updateSyncedPropsFabric(prop[0], prop[1])();
+              });
+              return Promise.resolve(updatedProps);
+            }
           }
-        });
+        );
       }
     }
   };
 
-  function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$4(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly)
+        symbols = symbols.filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
 
-  function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(Object(source), true).forEach(function (key) { _defineProperty__default['default'](target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$4(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+      if (i % 2) {
+        ownKeys$4(Object(source), true).forEach(function(key) {
+          _defineProperty__default["default"](target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(
+          target,
+          Object.getOwnPropertyDescriptors(source)
+        );
+      } else {
+        ownKeys$4(Object(source)).forEach(function(key) {
+          Object.defineProperty(
+            target,
+            key,
+            Object.getOwnPropertyDescriptor(source, key)
+          );
+        });
+      }
+    }
+    return target;
+  }
   var GlMap = {
     name: "GlMap",
-    mixins: [withWatchers, withAsyncActions, withPrivateMethods, withEventsMixin],
-    props: _objectSpread$4({
-      mapboxGl: {
-        type: Object,
-        default: null
-      }
-    }, options),
+    mixins: [
+      withWatchers,
+      withAsyncActions,
+      withPrivateMethods,
+      withEventsMixin
+    ],
+    props: _objectSpread$4(
+      {
+        mapboxGl: {
+          type: Object,
+          default: null
+        }
+      },
+      options
+    ),
     provide: function provide() {
       var _this = this;
 
       return {
-        mapbox: vue.computed(function () {
+        mapbox: vue.computed(function() {
           return _this.mapbox;
         }),
-        map: vue.computed(function () {
-          return _this.map;
+        map: vue.computed(function() {
+          return vue.isRef(_this.map) ? _this.map.value : _this.map;
         }),
-        actions: vue.computed(function () {
+        actions: vue.computed(function() {
           return _this.actions;
         })
       };
@@ -990,16 +1294,24 @@
       this.map = null;
       this.propsIsUpdating = {};
       this.$_containerVNode = null;
-      this.mapboxPromise = this.mapboxGl ? Promise.resolve(this.mapboxGl) : import('mapbox-gl');
+      this.mapboxPromise = this.mapboxGl
+        ? Promise.resolve(this.mapboxGl)
+        : import("mapbox-gl");
     },
     mounted: function mounted() {
       var _this2 = this;
 
-      this.$_loadMap().then(function (map) {
+      this.$_loadMap().then(function(map) {
         _this2.map = map;
 
-        if (_this2.RTLTextPluginUrl !== undefined && _this2.mapbox.getRTLTextPluginStatus() !== "loaded") {
-          _this2.mapbox.setRTLTextPlugin(_this2.RTLTextPluginUrl, _this2.$_RTLTextPluginError);
+        if (
+          _this2.RTLTextPluginUrl !== undefined &&
+          _this2.mapbox.getRTLTextPluginStatus() !== "loaded"
+        ) {
+          _this2.mapbox.setRTLTextPlugin(
+            _this2.RTLTextPluginUrl,
+            _this2.$_RTLTextPluginError
+          );
         }
 
         var events = Object.values(mapEvents);
@@ -1022,7 +1334,7 @@
     beforeDestroy: function beforeDestroy() {
       var _this3 = this;
 
-      this.$nextTick(function () {
+      this.$nextTick(function() {
         if (_this3.map) _this3.map.remove();
       });
     },
@@ -1034,22 +1346,69 @@
         });
       }
 
-      return vue.h("div", {
-        class: "mgl-map-wrapper"
-      }, [this.$_containerVNode, this.initialized ? this.$slots.default() : null]);
+      return vue.h(
+        "div",
+        {
+          class: "mgl-map-wrapper"
+        },
+        [this.$_containerVNode, this.initialized ? this.$slots.default() : null]
+      );
     }
   };
 
-  function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$5(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly)
+        symbols = symbols.filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
 
-  function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$5(Object(source), true).forEach(function (key) { _defineProperty__default['default'](target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$5(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$5(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+      if (i % 2) {
+        ownKeys$5(Object(source), true).forEach(function(key) {
+          _defineProperty__default["default"](target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(
+          target,
+          Object.getOwnPropertyDescriptors(source)
+        );
+      } else {
+        ownKeys$5(Object(source)).forEach(function(key) {
+          Object.defineProperty(
+            target,
+            key,
+            Object.getOwnPropertyDescriptor(source, key)
+          );
+        });
+      }
+    }
+    return target;
+  }
   var withSelfEventsMixin = {
     methods: {
       $_emitSelfEvent: function $_emitSelfEvent(event) {
-        var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-        this.$_emitMapEvent(event, _objectSpread$5({
-          control: this.control
-        }, data));
+        var data =
+          arguments.length > 1 && arguments[1] !== undefined
+            ? arguments[1]
+            : {};
+        this.$_emitMapEvent(
+          event,
+          _objectSpread$5(
+            {
+              control: this.control
+            },
+            data
+          )
+        );
       },
 
       /** Bind events for markers, popups and controls.
@@ -1060,7 +1419,7 @@
         var _this = this;
 
         var listeners = utils.extractListenersFromAttrs(this.$attrs);
-        Object.keys(listeners).forEach(function (listenerKey) {
+        Object.keys(listeners).forEach(function(listenerKey) {
           var eventName = listenerKey.substring(2).toLowerCase();
 
           if (eventNames.includes(eventName)) {
@@ -1073,7 +1432,7 @@
 
         if (events.length === 0) return;
         if (!emitter) return;
-        events.forEach(function (eventName) {
+        events.forEach(function(eventName) {
           emitter.off(eventName, _this2.$_emitSelfEvent);
         });
       }
@@ -1246,9 +1605,43 @@
     }
   };
 
-  function ownKeys$6(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$6(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly)
+        symbols = symbols.filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
 
-  function _objectSpread$6(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$6(Object(source), true).forEach(function (key) { _defineProperty__default['default'](target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$6(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$6(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+      if (i % 2) {
+        ownKeys$6(Object(source), true).forEach(function(key) {
+          _defineProperty__default["default"](target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(
+          target,
+          Object.getOwnPropertyDescriptors(source)
+        );
+      } else {
+        ownKeys$6(Object(source)).forEach(function(key) {
+          Object.defineProperty(
+            target,
+            key,
+            Object.getOwnPropertyDescriptor(source, key)
+          );
+        });
+      }
+    }
+    return target;
+  }
   var markerEvents = {
     drag: "drag",
     dragstart: "dragstart",
@@ -1269,7 +1662,6 @@
         get marker() {
           return self.marker;
         }
-
       };
     },
     props: {
@@ -1325,11 +1717,14 @@
       var listeners = utils.extractListenersFromAttrs(this.$attrs);
 
       if (listeners["onUpdate:coordinates"]) {
-        this.marker.on("dragend", function (event) {
+        this.marker.on("dragend", function(event) {
           var newCoordinates;
 
           if (_this.coordinates instanceof Array) {
-            newCoordinates = [event.target._lngLat.lng, event.target._lngLat.lat];
+            newCoordinates = [
+              event.target._lngLat.lng,
+              event.target._lngLat.lat
+            ];
           } else {
             newCoordinates = event.target._lngLat;
           }
@@ -1365,11 +1760,11 @@
         var _this2 = this;
 
         var listeners = utils.extractListenersFromAttrs(this.$attrs);
-        Object.keys(listeners).forEach(function (listenerKey) {
+        Object.keys(listeners).forEach(function(listenerKey) {
           var eventName = listenerKey.substring(2).toLowerCase();
 
           if (Object.values(markerDOMEvents).includes(eventName)) {
-            _this2.marker._element.addEventListener(eventName, function (event) {
+            _this2.marker._element.addEventListener(eventName, function(event) {
               _this2.$_emitSelfEvent(event);
             });
           }
@@ -1384,11 +1779,15 @@
       }
     },
     render: function render() {
-      return vue.h("div", {
-        style: {
-          display: "none"
-        }
-      }, [this.$slots.marker(), this.marker ? this.$slots.default() : null]);
+      return vue.h(
+        "div",
+        {
+          style: {
+            display: "none"
+          }
+        },
+        [this.$slots.marker(), this.marker ? this.$slots.default() : null]
+      );
     }
   };
 
@@ -1442,7 +1841,16 @@
        */
       anchor: {
         validator: function validator(value) {
-          var allowedValues = ["top", "bottom", "left", "right", "top-left", "top-right", "bottom-left", "bottom-right"];
+          var allowedValues = [
+            "top",
+            "bottom",
+            "left",
+            "right",
+            "top-left",
+            "top-right",
+            "bottom-left",
+            "bottom-right"
+          ];
           return typeof value === "string" && allowedValues.includes(value);
         },
         default: undefined
@@ -1584,33 +1992,71 @@
       }
     },
     render: function render() {
-      return vue.h("div", {
-        style: {
-          display: "none"
-        }
-      }, [this.$slots.default()]);
+      return vue.h(
+        "div",
+        {
+          style: {
+            display: "none"
+          }
+        },
+        [this.$slots.default()]
+      );
     }
   };
 
   var layerEventsConfig = {
-    "mousedown": "onMousedown",
-    "mouseup": "onMouseup",
-    "click": "onClick",
-    "dblclick": "onDblclick",
-    "mousemove": "onMousemove",
-    "mouseenter": "onMouseenter",
-    "mouseleave": "onMouseleave",
-    "mouseover": "onMouseover",
-    "mouseout": "onMouseout",
-    "contextmenu": "onContextmenu",
-    "touchstart": "onTouchstart",
-    "touchend": "onTouchend",
-    "touchcancel": "onTouchcancel"
+    mousedown: "onMousedown",
+    mouseup: "onMouseup",
+    click: "onClick",
+    dblclick: "onDblclick",
+    mousemove: "onMousemove",
+    mouseenter: "onMouseenter",
+    mouseleave: "onMouseleave",
+    mouseover: "onMouseover",
+    mouseout: "onMouseout",
+    contextmenu: "onContextmenu",
+    touchstart: "onTouchstart",
+    touchend: "onTouchend",
+    touchcancel: "onTouchcancel"
   };
 
-  function ownKeys$7(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$7(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly)
+        symbols = symbols.filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
 
-  function _objectSpread$7(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$7(Object(source), true).forEach(function (key) { _defineProperty__default['default'](target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$7(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$7(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+      if (i % 2) {
+        ownKeys$7(Object(source), true).forEach(function(key) {
+          _defineProperty__default["default"](target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(
+          target,
+          Object.getOwnPropertyDescriptors(source)
+        );
+      } else {
+        ownKeys$7(Object(source)).forEach(function(key) {
+          Object.defineProperty(
+            target,
+            key,
+            Object.getOwnPropertyDescriptor(source, key)
+          );
+        });
+      }
+    }
+    return target;
+  }
   var mapboxSourceProps = {
     sourceId: {
       type: String,
@@ -1651,7 +2097,13 @@
   };
   var layerMixin = {
     mixins: [withEventsMixin],
-    props: _objectSpread$7(_objectSpread$7(_objectSpread$7({}, mapboxSourceProps), mapboxLayerStyleProps), componentProps),
+    props: _objectSpread$7(
+      _objectSpread$7(
+        _objectSpread$7({}, mapboxSourceProps),
+        mapboxLayerStyleProps
+      ),
+      componentProps
+    ),
     inject: ["mapbox", "map"],
     data: function data() {
       return {
@@ -1660,73 +2112,93 @@
     },
     computed: {
       sourceLoaded: function sourceLoaded() {
-        return this.map ? this.map.value.isSourceLoaded(this.sourceId) : false;
+        return this.map ? this.map.isSourceLoaded(this.sourceId) : false;
       },
       mapLayer: function mapLayer() {
-        return this.map ? this.map.value.getLayer(this.layerId) : null;
+        return this.map ? this.map.getLayer(this.layerId) : null;
       },
       mapSource: function mapSource() {
-        return this.map ? this.map.value.getSource(this.sourceId) : null;
+        return this.map ? this.map.getSource(this.sourceId) : null;
       }
     },
     created: function created() {
       if (this.layer.minzoom) {
-        this.$watch("layer.minzoom", function (next) {
+        this.$watch("layer.minzoom", function(next) {
           if (this.initial) return;
-          this.map.value.setLayerZoomRange(this.layerId, next, this.layer.maxzoom);
+          this.map.setLayerZoomRange(this.layerId, next, this.layer.maxzoom);
         });
       }
 
       if (this.layer.maxzoom) {
-        this.$watch("layer.maxzoom", function (next) {
+        this.$watch("layer.maxzoom", function(next) {
           if (this.initial) return;
-          this.map.value.setLayerZoomRange(this.layerId, this.layer.minzoom, next);
+          this.map.setLayerZoomRange(this.layerId, this.layer.minzoom, next);
         });
       }
 
       if (this.layer.paint) {
-        this.$watch("layer.paint", function (next) {
-          if (this.initial) return;
+        this.$watch(
+          "layer.paint",
+          function(next) {
+            if (this.initial) return;
 
-          if (next) {
-            for (var _i = 0, _Object$keys = Object.keys(next); _i < _Object$keys.length; _i++) {
-              var prop = _Object$keys[_i];
-              this.map.value.setPaintProperty(this.layerId, prop, next[prop]);
+            if (next) {
+              for (
+                var _i = 0, _Object$keys = Object.keys(next);
+                _i < _Object$keys.length;
+                _i++
+              ) {
+                var prop = _Object$keys[_i];
+                this.map.setPaintProperty(this.layerId, prop, next[prop]);
+              }
             }
+          },
+          {
+            deep: true
           }
-        }, {
-          deep: true
-        });
+        );
       }
 
       if (this.layer.layout) {
-        this.$watch("layer.layout", function (next) {
-          if (this.initial) return;
+        this.$watch(
+          "layer.layout",
+          function(next) {
+            if (this.initial) return;
 
-          if (next) {
-            for (var _i2 = 0, _Object$keys2 = Object.keys(next); _i2 < _Object$keys2.length; _i2++) {
-              var prop = _Object$keys2[_i2];
-              this.map.value.setLayoutProperty(this.layerId, prop, next[prop]);
+            if (next) {
+              for (
+                var _i2 = 0, _Object$keys2 = Object.keys(next);
+                _i2 < _Object$keys2.length;
+                _i2++
+              ) {
+                var prop = _Object$keys2[_i2];
+                this.map.setLayoutProperty(this.layerId, prop, next[prop]);
+              }
             }
+          },
+          {
+            deep: true
           }
-        }, {
-          deep: true
-        });
+        );
       }
 
       if (this.layer.filter) {
-        this.$watch("layer.filter", function (next) {
-          if (this.initial) return;
-          this.map.value.setFilter(this.layerId, next);
-        }, {
-          deep: true
-        });
+        this.$watch(
+          "layer.filter",
+          function(next) {
+            if (this.initial) return;
+            this.map.setFilter(this.layerId, next);
+          },
+          {
+            deep: true
+          }
+        );
       }
     },
     beforeDestroy: function beforeDestroy() {
-      if (this.map && this.map.value.loaded()) {
+      if (this.map && this.map.loaded()) {
         try {
-          this.map.value.removeLayer(this.layerId);
+          this.map.removeLayer(this.layerId);
         } catch (err) {
           this.$_emitEvent("layer-does-not-exist", {
             layerId: this.sourceId,
@@ -1736,7 +2208,7 @@
 
         if (this.clearSource) {
           try {
-            this.map.value.removeSource(this.sourceId);
+            this.map.removeSource(this.sourceId);
           } catch (err) {
             this.$_emitEvent("source-does-not-exist", {
               sourceId: this.sourceId,
@@ -1757,11 +2229,11 @@
 
         var eventNames = Object.keys(eventsConfig);
         var listeners = utils.extractListenersFromAttrs(this.$attrs);
-        Object.keys(listeners).forEach(function (listenerKey) {
+        Object.keys(listeners).forEach(function(listenerKey) {
           var eventName = listenerKey.substring(2).toLowerCase();
 
           if (eventNames.includes(eventName)) {
-            _this.map.value.on(eventName, _this.layerId, _this.$_emitLayerMapEvent);
+            _this.map.on(eventName, _this.layerId, _this.$_emitLayerMapEvent);
           }
         });
       },
@@ -1769,8 +2241,12 @@
         var _this2 = this;
 
         if (this.map) {
-          events.forEach(function (eventName) {
-            _this2.map.value.off(eventName, _this2.layerId, _this2.$_emitLayerMapEvent);
+          events.forEach(function(eventName) {
+            _this2.map.off(
+              eventName,
+              _this2.layerId,
+              _this2.$_emitLayerMapEvent
+            );
           });
         }
       },
@@ -1779,19 +2255,19 @@
           this.$_emitEvent("layer-source-loading", {
             sourceId: this.sourceId
           });
-          this.map.value.off("dataloading", this.$_watchSourceLoading);
+          this.map.off("dataloading", this.$_watchSourceLoading);
         }
       },
       move: function move(beforeId) {
-        this.map.value.moveLayer(this.layerId, beforeId);
+        this.map.moveLayer(this.layerId, beforeId);
         this.$_emitEvent("layer-moved", {
           layerId: this.layerId,
           beforeId: beforeId
         });
       },
       remove: function remove() {
-        this.map.value.removeLayer(this.layerId);
-        this.map.value.removeSource(this.sourceId);
+        this.map.removeLayer(this.layerId);
+        this.map.removeSource(this.sourceId);
         this.$_emitEvent("layer-removed", {
           layerId: this.layerId
         });
@@ -1801,9 +2277,43 @@
     render: function render() {}
   };
 
-  function ownKeys$8(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$8(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly)
+        symbols = symbols.filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
 
-  function _objectSpread$8(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$8(Object(source), true).forEach(function (key) { _defineProperty__default['default'](target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$8(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$8(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+      if (i % 2) {
+        ownKeys$8(Object(source), true).forEach(function(key) {
+          _defineProperty__default["default"](target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(
+          target,
+          Object.getOwnPropertyDescriptors(source)
+        );
+      } else {
+        ownKeys$8(Object(source)).forEach(function(key) {
+          Object.defineProperty(
+            target,
+            key,
+            Object.getOwnPropertyDescriptor(source, key)
+          );
+        });
+      }
+    }
+    return target;
+  }
   var GeojsonLayer = {
     name: "GeojsonLayer",
     mixins: [layerMixin],
@@ -1811,7 +2321,7 @@
       getSourceFeatures: function getSourceFeatures() {
         var _this = this;
 
-        return function (filter) {
+        return function(filter) {
           if (_this.map) {
             return _this.map.querySourceFeatures(_this.sourceId, {
               filter: filter
@@ -1824,7 +2334,7 @@
       getRenderedFeatures: function getRenderedFeatures() {
         var _this2 = this;
 
-        return function (geometry, filter) {
+        return function(geometry, filter) {
           if (_this2.map) {
             return _this2.map.queryRenderedFeatures(geometry, {
               layers: [_this2.layerId],
@@ -1838,10 +2348,13 @@
       getClusterExpansionZoom: function getClusterExpansionZoom() {
         var _this3 = this;
 
-        return function (clusterId) {
-          return new Promise(function (resolve, reject) {
+        return function(clusterId) {
+          return new Promise(function(resolve, reject) {
             if (_this3.mapSource) {
-              _this3.mapSource.getClusterExpansionZoom(clusterId, function (err, zoom) {
+              _this3.mapSource.getClusterExpansionZoom(clusterId, function(
+                err,
+                zoom
+              ) {
                 if (err) {
                   return reject(err);
                 }
@@ -1849,7 +2362,11 @@
                 return resolve(zoom);
               });
             } else {
-              return reject(new Error("Map source with id ".concat(_this3.sourceId, " not found.")));
+              return reject(
+                new Error(
+                  "Map source with id ".concat(_this3.sourceId, " not found.")
+                )
+              );
             }
           });
         };
@@ -1857,12 +2374,12 @@
       getClusterChildren: function getClusterChildren() {
         var _this4 = this;
 
-        return function (clusterId) {
-          return new Promise(function (resolve, reject) {
+        return function(clusterId) {
+          return new Promise(function(resolve, reject) {
             var source = _this4.mapSource;
 
             if (source) {
-              source.getClusterChildren(clusterId, function (err, features) {
+              source.getClusterChildren(clusterId, function(err, features) {
                 if (err) {
                   return reject(err);
                 }
@@ -1870,7 +2387,11 @@
                 return resolve(features);
               });
             } else {
-              return reject(new Error("Map source with id ".concat(_this4.sourceId, " not found.")));
+              return reject(
+                new Error(
+                  "Map source with id ".concat(_this4.sourceId, " not found.")
+                )
+              );
             }
           });
         };
@@ -1878,24 +2399,37 @@
       getClusterLeaves: function getClusterLeaves() {
         var _this5 = this;
 
-        return function () {
-          for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        return function() {
+          for (
+            var _len = arguments.length, args = new Array(_len), _key = 0;
+            _key < _len;
+            _key++
+          ) {
             args[_key] = arguments[_key];
           }
 
-          return new Promise(function (resolve, reject) {
+          return new Promise(function(resolve, reject) {
             if (_this5.mapSource) {
               var _this5$mapSource;
 
-              (_this5$mapSource = _this5.mapSource).getClusterLeaves.apply(_this5$mapSource, args.concat([function (err, features) {
-                if (err) {
-                  return reject(err);
-                }
+              (_this5$mapSource = _this5.mapSource).getClusterLeaves.apply(
+                _this5$mapSource,
+                args.concat([
+                  function(err, features) {
+                    if (err) {
+                      return reject(err);
+                    }
 
-                return resolve(features);
-              }]));
+                    return resolve(features);
+                  }
+                ])
+              );
             } else {
-              return reject(new Error("Map source with id ".concat(_this5.sourceId, " not found.")));
+              return reject(
+                new Error(
+                  "Map source with id ".concat(_this5.sourceId, " not found.")
+                )
+              );
             }
           });
         };
@@ -1903,12 +2437,16 @@
     },
     created: function created() {
       if (this.source) {
-        this.$watch("source.data", function (next) {
-          if (this.initial) return;
-          this.mapSource.setData(next);
-        }, {
-          deep: true
-        });
+        this.$watch(
+          "source.data",
+          function(next) {
+            if (this.initial) return;
+            this.mapSource.setData(next);
+          },
+          {
+            deep: true
+          }
+        );
       }
 
       this.$_deferredMount();
@@ -1919,9 +2457,12 @@
         this.map.on("dataloading", this.$_watchSourceLoading);
 
         if (this.source) {
-          var source = _objectSpread$8({
-            type: "geojson"
-          }, this.source);
+          var source = _objectSpread$8(
+            {
+              type: "geojson"
+            },
+            this.source
+          );
 
           try {
             this.map.addSource(this.sourceId, source);
@@ -1952,10 +2493,13 @@
           }
         }
 
-        var layer = _objectSpread$8({
-          id: this.layerId,
-          source: this.sourceId
-        }, this.layer);
+        var layer = _objectSpread$8(
+          {
+            id: this.layerId,
+            source: this.sourceId
+          },
+          this.layer
+        );
 
         this.map.addLayer(layer, this.before);
         this.$_emitEvent("added", {
@@ -1980,7 +2524,11 @@
           return this.map.getFeatureState(params);
         }
       },
-      removeFeatureState: function removeFeatureState(featureId, sourceLayer, key) {
+      removeFeatureState: function removeFeatureState(
+        featureId,
+        sourceLayer,
+        key
+      ) {
         if (this.map) {
           var params = {
             id: featureId,
@@ -1993,39 +2541,81 @@
     }
   };
 
-  function ownKeys$9(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$9(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly)
+        symbols = symbols.filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
 
-  function _objectSpread$9(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$9(Object(source), true).forEach(function (key) { _defineProperty__default['default'](target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$9(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$9(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+      if (i % 2) {
+        ownKeys$9(Object(source), true).forEach(function(key) {
+          _defineProperty__default["default"](target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(
+          target,
+          Object.getOwnPropertyDescriptors(source)
+        );
+      } else {
+        ownKeys$9(Object(source)).forEach(function(key) {
+          Object.defineProperty(
+            target,
+            key,
+            Object.getOwnPropertyDescriptor(source, key)
+          );
+        });
+      }
+    }
+    return target;
+  }
   var ImageLayer = {
     name: "ImageLayer",
     mixins: [layerMixin],
     created: function created() {
       if (this.source) {
         if (this.source.coordinates) {
-          this.$watch("source.coordinates", function (next) {
-            if (this.initial) return;
+          this.$watch(
+            "source.coordinates",
+            function(next) {
+              if (this.initial) return;
 
-            if (next) {
-              this.mapSource.setCoordinates(next);
+              if (next) {
+                this.mapSource.setCoordinates(next);
+              }
+            },
+            {
+              deep: true
             }
-          }, {
-            deep: true
-          });
+          );
         }
 
         if (this.source.url) {
-          this.$watch("source.url", function (next) {
-            if (this.initial) return;
+          this.$watch(
+            "source.url",
+            function(next) {
+              if (this.initial) return;
 
-            if (next) {
-              this.mapSource.updateImage({
-                url: next,
-                coordinates: this.source.coordinates
-              });
+              if (next) {
+                this.mapSource.updateImage({
+                  url: next,
+                  coordinates: this.source.coordinates
+                });
+              }
+            },
+            {
+              deep: true
             }
-          }, {
-            deep: true
-          });
+          );
         }
       }
 
@@ -2033,9 +2623,12 @@
     },
     methods: {
       $_deferredMount: function $_deferredMount() {
-        var source = _objectSpread$9({
-          type: "image"
-        }, this.source);
+        var source = _objectSpread$9(
+          {
+            type: "image"
+          },
+          this.source
+        );
 
         this.map.on("dataloading", this.$_watchSourceLoading);
 
@@ -2066,11 +2659,14 @@
           }
         }
 
-        var layer = _objectSpread$9({
-          id: this.layerId,
-          source: this.sourceId,
-          type: "raster"
-        }, this.layer);
+        var layer = _objectSpread$9(
+          {
+            id: this.layerId,
+            source: this.sourceId,
+            type: "raster"
+          },
+          this.layer
+        );
 
         this.map.addLayer(layer, this.before);
         this.$_emitEvent("added", {
@@ -2080,9 +2676,43 @@
     }
   };
 
-  function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$a(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly)
+        symbols = symbols.filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
 
-  function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$a(Object(source), true).forEach(function (key) { _defineProperty__default['default'](target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$a(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$a(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+      if (i % 2) {
+        ownKeys$a(Object(source), true).forEach(function(key) {
+          _defineProperty__default["default"](target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(
+          target,
+          Object.getOwnPropertyDescriptors(source)
+        );
+      } else {
+        ownKeys$a(Object(source)).forEach(function(key) {
+          Object.defineProperty(
+            target,
+            key,
+            Object.getOwnPropertyDescriptor(source, key)
+          );
+        });
+      }
+    }
+    return target;
+  }
   var CanvasLayer = {
     name: "CanvasLayer",
     mixins: [layerMixin],
@@ -2113,9 +2743,12 @@
     },
     methods: {
       $_deferredMount: function $_deferredMount() {
-        var source = _objectSpread$a({
-          type: "canvas"
-        }, this.source);
+        var source = _objectSpread$a(
+          {
+            type: "canvas"
+          },
+          this.source
+        );
 
         this.map.on("dataloading", this.$_watchSourceLoading);
 
@@ -2146,11 +2779,14 @@
           }
         }
 
-        var layer = _objectSpread$a({
-          id: this.layerId,
-          source: this.sourceId,
-          type: "raster"
-        }, this.layer);
+        var layer = _objectSpread$a(
+          {
+            id: this.layerId,
+            source: this.sourceId,
+            type: "raster"
+          },
+          this.layer
+        );
 
         this.map.addLayer(layer, this.before);
         this.$_emitEvent("added", {
@@ -2161,9 +2797,43 @@
     }
   };
 
-  function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$b(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly)
+        symbols = symbols.filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
 
-  function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$b(Object(source), true).forEach(function (key) { _defineProperty__default['default'](target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$b(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+      if (i % 2) {
+        ownKeys$b(Object(source), true).forEach(function(key) {
+          _defineProperty__default["default"](target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(
+          target,
+          Object.getOwnPropertyDescriptors(source)
+        );
+      } else {
+        ownKeys$b(Object(source)).forEach(function(key) {
+          Object.defineProperty(
+            target,
+            key,
+            Object.getOwnPropertyDescriptor(source, key)
+          );
+        });
+      }
+    }
+    return target;
+  }
   var VideoLayer = {
     name: "VideoLayer",
     mixins: [layerMixin],
@@ -2174,7 +2844,7 @@
     },
     created: function created() {
       if (this.source && this.source.coordinates) {
-        this.$watch("source.coordinates", function (next) {
+        this.$watch("source.coordinates", function(next) {
           if (this.initial) return;
           this.mapSource.setCoordinates(next);
         });
@@ -2184,9 +2854,12 @@
     },
     methods: {
       $_deferredMount: function $_deferredMount() {
-        var source = _objectSpread$b({
-          type: "video"
-        }, this.source);
+        var source = _objectSpread$b(
+          {
+            type: "video"
+          },
+          this.source
+        );
 
         this.map.on("dataloading", this.$_watchSourceLoading);
 
@@ -2217,11 +2890,14 @@
           }
         }
 
-        var layer = _objectSpread$b({
-          id: this.layerId,
-          source: this.sourceId,
-          type: "background"
-        }, this.layer);
+        var layer = _objectSpread$b(
+          {
+            id: this.layerId,
+            source: this.sourceId,
+            type: "background"
+          },
+          this.layer
+        );
 
         this.map.addLayer(layer, this.before);
         this.$_emitEvent("added", {
@@ -2231,9 +2907,43 @@
     }
   };
 
-  function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$c(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly)
+        symbols = symbols.filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
 
-  function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$c(Object(source), true).forEach(function (key) { _defineProperty__default['default'](target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$c(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+      if (i % 2) {
+        ownKeys$c(Object(source), true).forEach(function(key) {
+          _defineProperty__default["default"](target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(
+          target,
+          Object.getOwnPropertyDescriptors(source)
+        );
+      } else {
+        ownKeys$c(Object(source)).forEach(function(key) {
+          Object.defineProperty(
+            target,
+            key,
+            Object.getOwnPropertyDescriptor(source, key)
+          );
+        });
+      }
+    }
+    return target;
+  }
   var VectorLayer = {
     name: "VectorLayer",
     mixins: [layerMixin],
@@ -2241,7 +2951,7 @@
       getSourceFeatures: function getSourceFeatures() {
         var _this = this;
 
-        return function (filter) {
+        return function(filter) {
           if (_this.map) {
             return _this.map.value.querySourceFeatures(_this.sourceId, {
               sourceLayer: _this.layer["source-layer"],
@@ -2255,7 +2965,7 @@
       getRenderedFeatures: function getRenderedFeatures() {
         var _this2 = this;
 
-        return function (geometry, filter) {
+        return function(geometry, filter) {
           if (_this2.map) {
             return _this2.map.value.queryRenderedFeatures(geometry, {
               layers: [_this2.layerId],
@@ -2278,9 +2988,12 @@
     },
     methods: {
       $_deferredMount: function $_deferredMount() {
-        var source = _objectSpread$c({
-          type: "vector"
-        }, this.source);
+        var source = _objectSpread$c(
+          {
+            type: "vector"
+          },
+          this.source
+        );
 
         this.map.value.on("dataloading", this.$_watchSourceLoading);
 
@@ -2312,10 +3025,13 @@
           }
         }
 
-        var layer = _objectSpread$c({
-          id: this.layerId,
-          source: this.sourceId
-        }, this.layer);
+        var layer = _objectSpread$c(
+          {
+            id: this.layerId,
+            source: this.sourceId
+          },
+          this.layer
+        );
 
         this.map.value.addLayer(layer, this.before);
         this.$_emitEvent("added", {
@@ -2345,9 +3061,43 @@
     }
   };
 
-  function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$d(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly)
+        symbols = symbols.filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
 
-  function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$d(Object(source), true).forEach(function (key) { _defineProperty__default['default'](target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$d(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+      if (i % 2) {
+        ownKeys$d(Object(source), true).forEach(function(key) {
+          _defineProperty__default["default"](target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(
+          target,
+          Object.getOwnPropertyDescriptors(source)
+        );
+      } else {
+        ownKeys$d(Object(source)).forEach(function(key) {
+          Object.defineProperty(
+            target,
+            key,
+            Object.getOwnPropertyDescriptor(source, key)
+          );
+        });
+      }
+    }
+    return target;
+  }
   var RasterLayer = {
     name: "RasterLayer",
     mixins: [layerMixin],
@@ -2356,9 +3106,12 @@
     },
     methods: {
       $_deferredMount: function $_deferredMount() {
-        var source = _objectSpread$d({
-          type: "raster"
-        }, this.source);
+        var source = _objectSpread$d(
+          {
+            type: "raster"
+          },
+          this.source
+        );
 
         this.map.on("dataloading", this.$_watchSourceLoading);
 
@@ -2390,11 +3143,14 @@
           }
         }
 
-        var layer = _objectSpread$d({
-          id: this.layerId,
-          type: "raster",
-          source: this.sourceId
-        }, this.layer);
+        var layer = _objectSpread$d(
+          {
+            id: this.layerId,
+            type: "raster",
+            source: this.sourceId
+          },
+          this.layer
+        );
 
         this.map.addLayer(layer, this.before);
         this.$_emitEvent("added", {
@@ -2449,6 +3205,5 @@
   exports.withEvents = withEvents;
   exports.withSelfEvents = withSelfEvents;
 
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
+  Object.defineProperty(exports, "__esModule", { value: true });
+});

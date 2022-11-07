@@ -1,4 +1,4 @@
-import { h, computed } from "vue";
+import { h, computed, isRef } from "vue";
 import "../../styles/index.css";
 import withEvents from "../../lib/withEvents";
 import mapEvents from "./events";
@@ -23,8 +23,8 @@ export default {
   provide() {
     return {
       mapbox: computed(() => this.mapbox),
-      map: computed(() => this.map),
-      actions: computed(() => this.actions),
+      map: computed(() => (isRef(this.map) ? this.map.value : this.map)),
+      actions: computed(() => this.actions)
     };
   },
 

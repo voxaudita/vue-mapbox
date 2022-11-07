@@ -1,5 +1,5 @@
-import { computed, h } from 'vue';
-import promisify from 'map-promisified';
+import { computed, isRef, h } from "vue";
+import promisify from "map-promisified";
 
 var withEventsMixin = {
   methods: {
@@ -32,8 +32,14 @@ var withEventsMixin = {
 
 var mapEvents = {
   onResize: { name: "resize", listener: "onResize" },
-  onWebglcontextlost: { name: "webglcontextlost", listener: "onWebglcontextlost" },
-  onWebglcontextrestored: { name: "webglcontextrestored", listener: "onWebglcontextrestored" },
+  onWebglcontextlost: {
+    name: "webglcontextlost",
+    listener: "onWebglcontextlost"
+  },
+  onWebglcontextrestored: {
+    name: "webglcontextrestored",
+    listener: "onWebglcontextrestored"
+  },
   onRemove: { name: "remove", listener: "onRemove" },
   onMovestart: { name: "movestart", listener: "onMovestart" },
   onLoad: { name: "load", listener: "onLoad" },
@@ -48,13 +54,19 @@ var mapEvents = {
   onMousemove: { name: "mousemove", listener: "onMousemove" },
   onMouseup: { name: "mouseup", listener: "onMouseup" },
   onMousedown: { name: "mousedown", listener: "onMousedown" },
-  onSourcedataloading: { name: "sourcedataloading", listener: "onSourcedataloading" },
+  onSourcedataloading: {
+    name: "sourcedataloading",
+    listener: "onSourcedataloading"
+  },
   onError: { name: "error", listener: "onError" },
   onData: { name: "data", listener: "onData" },
   onStyledata: { name: "styledata", listener: "onStyledata" },
   onSourcedata: { name: "sourcedata", listener: "onSourcedata" },
   onMouseout: { name: "mouseout", listener: "onMouseout" },
-  onStyledataloading: { name: "styledataloading", listener: "onStyledataloading" },
+  onStyledataloading: {
+    name: "styledataloading",
+    listener: "onStyledataloading"
+  },
   onMoveend: { name: "moveend", listener: "onMoveend" },
   onMove: { name: "move", listener: "onMove" },
   onRender: { name: "render", listener: "onRender" },
@@ -497,8 +509,8 @@ var GlMap = {
   provide() {
     return {
       mapbox: computed(() => this.mapbox),
-      map: computed(() => this.map),
-      actions: computed(() => this.actions),
+      map: computed(() => (isRef(this.map) ? this.map.value : this.map)),
+      actions: computed(() => this.actions)
     };
   },
 
@@ -542,7 +554,7 @@ var GlMap = {
     this.$_containerVNode = null;
     this.mapboxPromise = this.mapboxGl
       ? Promise.resolve(this.mapboxGl)
-      : import('mapbox-gl');
+      : import("mapbox-gl");
   },
 
   mounted() {
@@ -1154,19 +1166,19 @@ var Popup = {
 };
 
 var layerEventsConfig = {
-  "mousedown": "onMousedown",
-  "mouseup": "onMouseup",
-  "click": "onClick",
-  "dblclick": "onDblclick",
-  "mousemove": "onMousemove",
-  "mouseenter": "onMouseenter",
-  "mouseleave": "onMouseleave",
-  "mouseover": "onMouseover",
-  "mouseout": "onMouseout",
-  "contextmenu": "onContextmenu",
-  "touchstart": "onTouchstart",
-  "touchend": "onTouchend",
-  "touchcancel": "onTouchcancel"
+  mousedown: "onMousedown",
+  mouseup: "onMouseup",
+  click: "onClick",
+  dblclick: "onDblclick",
+  mousemove: "onMousemove",
+  mouseenter: "onMouseenter",
+  mouseleave: "onMouseleave",
+  mouseover: "onMouseover",
+  mouseout: "onMouseout",
+  contextmenu: "onContextmenu",
+  touchstart: "onTouchstart",
+  touchend: "onTouchend",
+  touchcancel: "onTouchcancel"
 };
 
 // import withRegistration from "../../lib/withRegistration";
@@ -1230,13 +1242,13 @@ var layerMixin = {
 
   computed: {
     sourceLoaded() {
-      return this.map ? this.map.value.isSourceLoaded(this.sourceId) : false;
+      return this.map ? this.map.isSourceLoaded(this.sourceId) : false;
     },
     mapLayer() {
-      return this.map ? this.map.value.getLayer(this.layerId) : null;
+      return this.map ? this.map.getLayer(this.layerId) : null;
     },
     mapSource() {
-      return this.map ? this.map.value.getSource(this.sourceId) : null;
+      return this.map ? this.map.getSource(this.sourceId) : null;
     }
   },
 
@@ -1244,14 +1256,14 @@ var layerMixin = {
     if (this.layer.minzoom) {
       this.$watch("layer.minzoom", function(next) {
         if (this.initial) return;
-        this.map.value.setLayerZoomRange(this.layerId, next, this.layer.maxzoom);
+        this.map.setLayerZoomRange(this.layerId, next, this.layer.maxzoom);
       });
     }
 
     if (this.layer.maxzoom) {
       this.$watch("layer.maxzoom", function(next) {
         if (this.initial) return;
-        this.map.value.setLayerZoomRange(this.layerId, this.layer.minzoom, next);
+        this.map.setLayerZoomRange(this.layerId, this.layer.minzoom, next);
       });
     }
 
@@ -1262,7 +1274,7 @@ var layerMixin = {
           if (this.initial) return;
           if (next) {
             for (let prop of Object.keys(next)) {
-              this.map.value.setPaintProperty(this.layerId, prop, next[prop]);
+              this.map.setPaintProperty(this.layerId, prop, next[prop]);
             }
           }
         },
@@ -1277,7 +1289,7 @@ var layerMixin = {
           if (this.initial) return;
           if (next) {
             for (let prop of Object.keys(next)) {
-              this.map.value.setLayoutProperty(this.layerId, prop, next[prop]);
+              this.map.setLayoutProperty(this.layerId, prop, next[prop]);
             }
           }
         },
@@ -1290,7 +1302,7 @@ var layerMixin = {
         "layer.filter",
         function(next) {
           if (this.initial) return;
-          this.map.value.setFilter(this.layerId, next);
+          this.map.setFilter(this.layerId, next);
         },
         { deep: true }
       );
@@ -1298,9 +1310,9 @@ var layerMixin = {
   },
 
   beforeDestroy() {
-    if (this.map && this.map.value.loaded()) {
+    if (this.map && this.map.loaded()) {
       try {
-        this.map.value.removeLayer(this.layerId);
+        this.map.removeLayer(this.layerId);
       } catch (err) {
         this.$_emitEvent("layer-does-not-exist", {
           layerId: this.sourceId,
@@ -1309,7 +1321,7 @@ var layerMixin = {
       }
       if (this.clearSource) {
         try {
-          this.map.value.removeSource(this.sourceId);
+          this.map.removeSource(this.sourceId);
         } catch (err) {
           this.$_emitEvent("source-does-not-exist", {
             sourceId: this.sourceId,
@@ -1331,7 +1343,7 @@ var layerMixin = {
       Object.keys(listeners).forEach(listenerKey => {
         const eventName = listenerKey.substring(2).toLowerCase();
         if (eventNames.includes(eventName)) {
-          this.map.value.on(eventName, this.layerId, this.$_emitLayerMapEvent);
+          this.map.on(eventName, this.layerId, this.$_emitLayerMapEvent);
         }
       });
     },
@@ -1339,7 +1351,7 @@ var layerMixin = {
     $_unbindEvents(events) {
       if (this.map) {
         events.forEach(eventName => {
-          this.map.value.off(eventName, this.layerId, this.$_emitLayerMapEvent);
+          this.map.off(eventName, this.layerId, this.$_emitLayerMapEvent);
         });
       }
     },
@@ -1347,12 +1359,12 @@ var layerMixin = {
     $_watchSourceLoading(data) {
       if (data.dataType === "source" && data.sourceId === this.sourceId) {
         this.$_emitEvent("layer-source-loading", { sourceId: this.sourceId });
-        this.map.value.off("dataloading", this.$_watchSourceLoading);
+        this.map.off("dataloading", this.$_watchSourceLoading);
       }
     },
 
     move(beforeId) {
-      this.map.value.moveLayer(this.layerId, beforeId);
+      this.map.moveLayer(this.layerId, beforeId);
       this.$_emitEvent("layer-moved", {
         layerId: this.layerId,
         beforeId: beforeId
@@ -1360,8 +1372,8 @@ var layerMixin = {
     },
 
     remove() {
-      this.map.value.removeLayer(this.layerId);
-      this.map.value.removeSource(this.sourceId);
+      this.map.removeLayer(this.layerId);
+      this.map.removeSource(this.sourceId);
       this.$_emitEvent("layer-removed", { layerId: this.layerId });
       this.$destroy();
     }
@@ -1955,4 +1967,24 @@ const MglRasterLayer = RasterLayer;
 const MglMarker = Marker;
 const MglPopup = Popup;
 
-export { $helpers, MglAttributionControl, MglCanvasLayer, MglFullscreenControl, MglGeojsonLayer, MglGeolocateControl, MglImageLayer, MglMap, MglMarker, MglNavigationControl, MglPopup, MglRasterLayer, MglScaleControl, MglVectorLayer, MglVideoLayer, asControl, asLayer, withEvents, withSelfEvents };
+export {
+  $helpers,
+  MglAttributionControl,
+  MglCanvasLayer,
+  MglFullscreenControl,
+  MglGeojsonLayer,
+  MglGeolocateControl,
+  MglImageLayer,
+  MglMap,
+  MglMarker,
+  MglNavigationControl,
+  MglPopup,
+  MglRasterLayer,
+  MglScaleControl,
+  MglVectorLayer,
+  MglVideoLayer,
+  asControl,
+  asLayer,
+  withEvents,
+  withSelfEvents
+};
