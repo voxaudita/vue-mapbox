@@ -2322,8 +2322,8 @@
         var _this = this;
 
         return function(filter) {
-          if (_this.map) {
-            return _this.map.querySourceFeatures(_this.sourceId, {
+          if (_this.map.value) {
+            return _this.map.value.querySourceFeatures(_this.sourceId, {
               filter: filter
             });
           }
@@ -2335,8 +2335,8 @@
         var _this2 = this;
 
         return function(geometry, filter) {
-          if (_this2.map) {
-            return _this2.map.queryRenderedFeatures(geometry, {
+          if (_this2.map.value) {
+            return _this2.map.value.queryRenderedFeatures(geometry, {
               layers: [_this2.layerId],
               filter: filter
             });
@@ -2454,7 +2454,7 @@
     methods: {
       $_deferredMount: function $_deferredMount() {
         // this.map = payload.map;
-        this.map.on("dataloading", this.$_watchSourceLoading);
+        this.map.value.on("dataloading", this.$_watchSourceLoading);
 
         if (this.source) {
           var source = _objectSpread$8(
@@ -2465,26 +2465,26 @@
           );
 
           try {
-            this.map.addSource(this.sourceId, source);
+            this.map.value.addSource(this.sourceId, source);
           } catch (err) {
             if (this.replaceSource) {
-              this.map.removeSource(this.sourceId);
-              this.map.addSource(this.sourceId, source);
+              this.map.value.removeSource(this.sourceId);
+              this.map.value.addSource(this.sourceId, source);
             }
           }
         }
 
         this.$_addLayer();
         this.$_bindLayerEvents(layerEventsConfig);
-        this.map.off("dataloading", this.$_watchSourceLoading);
+        this.map.value.off("dataloading", this.$_watchSourceLoading);
         this.initial = false;
       },
       $_addLayer: function $_addLayer() {
-        var existed = this.map.getLayer(this.layerId);
+        var existed = this.map.value.getLayer(this.layerId);
 
         if (existed) {
           if (this.replace) {
-            this.map.removeLayer(this.layerId);
+            this.map.value.removeLayer(this.layerId);
           } else {
             this.$_emitEvent("layer-exists", {
               layerId: this.layerId
@@ -2501,27 +2501,27 @@
           this.layer
         );
 
-        this.map.addLayer(layer, this.before);
+        this.map.value.addLayer(layer, this.before);
         this.$_emitEvent("added", {
           layerId: this.layerId
         });
       },
       setFeatureState: function setFeatureState(featureId, state) {
-        if (this.map) {
+        if (this.map.value) {
           var params = {
             id: featureId,
             source: this.source
           };
-          return this.map.setFeatureState(params, state);
+          return this.map.value.setFeatureState(params, state);
         }
       },
       getFeatureState: function getFeatureState(featureId) {
-        if (this.map) {
+        if (this.map.value) {
           var params = {
             id: featureId,
             source: this.source
           };
-          return this.map.getFeatureState(params);
+          return this.map.value.getFeatureState(params);
         }
       },
       removeFeatureState: function removeFeatureState(
@@ -2529,13 +2529,13 @@
         sourceLayer,
         key
       ) {
-        if (this.map) {
+        if (this.map.value) {
           var params = {
             id: featureId,
             source: this.source,
             sourceLayer: sourceLayer
           };
-          return this.map.removeFeatureState(params, key);
+          return this.map.value.removeFeatureState(params, key);
         }
       }
     }
