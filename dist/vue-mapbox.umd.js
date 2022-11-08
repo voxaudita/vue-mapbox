@@ -2112,27 +2112,35 @@
     },
     computed: {
       sourceLoaded: function sourceLoaded() {
-        return this.map ? this.map.isSourceLoaded(this.sourceId) : false;
+        return this.map ? this.map.value.isSourceLoaded(this.sourceId) : false;
       },
       mapLayer: function mapLayer() {
-        return this.map ? this.map.getLayer(this.layerId) : null;
+        return this.map ? this.map.value.getLayer(this.layerId) : null;
       },
       mapSource: function mapSource() {
-        return this.map ? this.map.getSource(this.sourceId) : null;
+        return this.map ? this.map.value.getSource(this.sourceId) : null;
       }
     },
     created: function created() {
       if (this.layer.minzoom) {
         this.$watch("layer.minzoom", function(next) {
           if (this.initial) return;
-          this.map.setLayerZoomRange(this.layerId, next, this.layer.maxzoom);
+          this.map.value.setLayerZoomRange(
+            this.layerId,
+            next,
+            this.layer.maxzoom
+          );
         });
       }
 
       if (this.layer.maxzoom) {
         this.$watch("layer.maxzoom", function(next) {
           if (this.initial) return;
-          this.map.setLayerZoomRange(this.layerId, this.layer.minzoom, next);
+          this.map.value.setLayerZoomRange(
+            this.layerId,
+            this.layer.minzoom,
+            next
+          );
         });
       }
 
@@ -2149,7 +2157,7 @@
                 _i++
               ) {
                 var prop = _Object$keys[_i];
-                this.map.setPaintProperty(this.layerId, prop, next[prop]);
+                this.map.value.setPaintProperty(this.layerId, prop, next[prop]);
               }
             }
           },
@@ -2172,7 +2180,11 @@
                 _i2++
               ) {
                 var prop = _Object$keys2[_i2];
-                this.map.setLayoutProperty(this.layerId, prop, next[prop]);
+                this.map.value.setLayoutProperty(
+                  this.layerId,
+                  prop,
+                  next[prop]
+                );
               }
             }
           },
@@ -2187,7 +2199,7 @@
           "layer.filter",
           function(next) {
             if (this.initial) return;
-            this.map.setFilter(this.layerId, next);
+            this.map.value.setFilter(this.layerId, next);
           },
           {
             deep: true
@@ -2196,9 +2208,9 @@
       }
     },
     beforeDestroy: function beforeDestroy() {
-      if (this.map && this.map.loaded()) {
+      if (this.map && this.map.value.loaded()) {
         try {
-          this.map.removeLayer(this.layerId);
+          this.map.value.removeLayer(this.layerId);
         } catch (err) {
           this.$_emitEvent("layer-does-not-exist", {
             layerId: this.sourceId,
@@ -2208,7 +2220,7 @@
 
         if (this.clearSource) {
           try {
-            this.map.removeSource(this.sourceId);
+            this.map.value.removeSource(this.sourceId);
           } catch (err) {
             this.$_emitEvent("source-does-not-exist", {
               sourceId: this.sourceId,
@@ -2233,7 +2245,11 @@
           var eventName = listenerKey.substring(2).toLowerCase();
 
           if (eventNames.includes(eventName)) {
-            _this.map.on(eventName, _this.layerId, _this.$_emitLayerMapEvent);
+            _this.map.value.on(
+              eventName,
+              _this.layerId,
+              _this.$_emitLayerMapEvent
+            );
           }
         });
       },
@@ -2242,7 +2258,7 @@
 
         if (this.map) {
           events.forEach(function(eventName) {
-            _this2.map.off(
+            _this2.map.value.off(
               eventName,
               _this2.layerId,
               _this2.$_emitLayerMapEvent
@@ -2255,19 +2271,19 @@
           this.$_emitEvent("layer-source-loading", {
             sourceId: this.sourceId
           });
-          this.map.off("dataloading", this.$_watchSourceLoading);
+          this.map.value.off("dataloading", this.$_watchSourceLoading);
         }
       },
       move: function move(beforeId) {
-        this.map.moveLayer(this.layerId, beforeId);
+        this.map.value.moveLayer(this.layerId, beforeId);
         this.$_emitEvent("layer-moved", {
           layerId: this.layerId,
           beforeId: beforeId
         });
       },
       remove: function remove() {
-        this.map.removeLayer(this.layerId);
-        this.map.removeSource(this.sourceId);
+        this.map.value.removeLayer(this.layerId);
+        this.map.value.removeSource(this.sourceId);
         this.$_emitEvent("layer-removed", {
           layerId: this.layerId
         });

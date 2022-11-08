@@ -1242,13 +1242,13 @@ var layerMixin = {
 
   computed: {
     sourceLoaded() {
-      return this.map ? this.map.isSourceLoaded(this.sourceId) : false;
+      return this.map ? this.map.value.isSourceLoaded(this.sourceId) : false;
     },
     mapLayer() {
-      return this.map ? this.map.getLayer(this.layerId) : null;
+      return this.map ? this.map.value.getLayer(this.layerId) : null;
     },
     mapSource() {
-      return this.map ? this.map.getSource(this.sourceId) : null;
+      return this.map ? this.map.value.getSource(this.sourceId) : null;
     }
   },
 
@@ -1256,14 +1256,22 @@ var layerMixin = {
     if (this.layer.minzoom) {
       this.$watch("layer.minzoom", function(next) {
         if (this.initial) return;
-        this.map.setLayerZoomRange(this.layerId, next, this.layer.maxzoom);
+        this.map.value.setLayerZoomRange(
+          this.layerId,
+          next,
+          this.layer.maxzoom
+        );
       });
     }
 
     if (this.layer.maxzoom) {
       this.$watch("layer.maxzoom", function(next) {
         if (this.initial) return;
-        this.map.setLayerZoomRange(this.layerId, this.layer.minzoom, next);
+        this.map.value.setLayerZoomRange(
+          this.layerId,
+          this.layer.minzoom,
+          next
+        );
       });
     }
 
@@ -1274,7 +1282,7 @@ var layerMixin = {
           if (this.initial) return;
           if (next) {
             for (let prop of Object.keys(next)) {
-              this.map.setPaintProperty(this.layerId, prop, next[prop]);
+              this.map.value.setPaintProperty(this.layerId, prop, next[prop]);
             }
           }
         },
@@ -1289,7 +1297,7 @@ var layerMixin = {
           if (this.initial) return;
           if (next) {
             for (let prop of Object.keys(next)) {
-              this.map.setLayoutProperty(this.layerId, prop, next[prop]);
+              this.map.value.setLayoutProperty(this.layerId, prop, next[prop]);
             }
           }
         },
@@ -1302,7 +1310,7 @@ var layerMixin = {
         "layer.filter",
         function(next) {
           if (this.initial) return;
-          this.map.setFilter(this.layerId, next);
+          this.map.value.setFilter(this.layerId, next);
         },
         { deep: true }
       );
@@ -1310,9 +1318,9 @@ var layerMixin = {
   },
 
   beforeDestroy() {
-    if (this.map && this.map.loaded()) {
+    if (this.map && this.map.value.loaded()) {
       try {
-        this.map.removeLayer(this.layerId);
+        this.map.value.removeLayer(this.layerId);
       } catch (err) {
         this.$_emitEvent("layer-does-not-exist", {
           layerId: this.sourceId,
@@ -1321,7 +1329,7 @@ var layerMixin = {
       }
       if (this.clearSource) {
         try {
-          this.map.removeSource(this.sourceId);
+          this.map.value.removeSource(this.sourceId);
         } catch (err) {
           this.$_emitEvent("source-does-not-exist", {
             sourceId: this.sourceId,
@@ -1343,7 +1351,7 @@ var layerMixin = {
       Object.keys(listeners).forEach(listenerKey => {
         const eventName = listenerKey.substring(2).toLowerCase();
         if (eventNames.includes(eventName)) {
-          this.map.on(eventName, this.layerId, this.$_emitLayerMapEvent);
+          this.map.value.on(eventName, this.layerId, this.$_emitLayerMapEvent);
         }
       });
     },
@@ -1351,7 +1359,7 @@ var layerMixin = {
     $_unbindEvents(events) {
       if (this.map) {
         events.forEach(eventName => {
-          this.map.off(eventName, this.layerId, this.$_emitLayerMapEvent);
+          this.map.value.off(eventName, this.layerId, this.$_emitLayerMapEvent);
         });
       }
     },
@@ -1359,12 +1367,12 @@ var layerMixin = {
     $_watchSourceLoading(data) {
       if (data.dataType === "source" && data.sourceId === this.sourceId) {
         this.$_emitEvent("layer-source-loading", { sourceId: this.sourceId });
-        this.map.off("dataloading", this.$_watchSourceLoading);
+        this.map.value.off("dataloading", this.$_watchSourceLoading);
       }
     },
 
     move(beforeId) {
-      this.map.moveLayer(this.layerId, beforeId);
+      this.map.value.moveLayer(this.layerId, beforeId);
       this.$_emitEvent("layer-moved", {
         layerId: this.layerId,
         beforeId: beforeId
@@ -1372,8 +1380,8 @@ var layerMixin = {
     },
 
     remove() {
-      this.map.removeLayer(this.layerId);
-      this.map.removeSource(this.sourceId);
+      this.map.value.removeLayer(this.layerId);
+      this.map.value.removeSource(this.sourceId);
       this.$_emitEvent("layer-removed", { layerId: this.layerId });
       this.$destroy();
     }
